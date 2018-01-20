@@ -1,4 +1,4 @@
-require "./corruption-checksum"
+require "./02-corruption-checksum"
 
 describe "corruption-checksum" do
   it "calculates checksum as sum of divisions between divisible pairs" do
