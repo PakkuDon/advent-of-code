@@ -4,7 +4,7 @@ class MemoryReallocation
       steps = []
       memory_banks = memory_banks.dup
 
-      while steps.length === steps.uniq.length do
+      while last_entry_is_unique?(steps) do
         blocks = memory_banks.max
         current_position = memory_banks.index(blocks)
 
@@ -25,6 +25,10 @@ class MemoryReallocation
     def increment_with_wrap(current_position, memory_banks)
       return 0 if current_position + 1 >= memory_banks.length
       current_position + 1
+    end
+
+    def last_entry_is_unique?(steps)
+      steps.index(steps.last) === steps.rindex(steps.last)
     end
   end
 end
