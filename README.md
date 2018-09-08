@@ -1,3 +1,3 @@
-# Advent of Code 2017
+# Advent of Code
 
 My solutions to Advent of Code exercises
