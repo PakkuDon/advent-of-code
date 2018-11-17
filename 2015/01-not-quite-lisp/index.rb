@@ -1,4 +1,4 @@
-require_relative "./01-not-quite-lisp"
+require_relative "./02-not-quite-lisp"
 
 puzzle_input = File.read("./input.txt")
 
