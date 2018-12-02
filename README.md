@@ -1,3 +1,7 @@
 # Advent of Code
 
-My solutions to Advent of Code exercises
+https://adventofcode.com
+
+- [2015](2015)
+- [2017](2017)
+- [2018](2018)
