@@ -1,7 +1,8 @@
 const fs = require('fs')
+const path = require('path')
 const parser = require('./01')
 
-const puzzleInput = fs.readFileSync('./input.txt', 'utf8')
+const puzzleInput = fs.readFileSync(path.join(__dirname, 'input.txt'), 'utf8')
 const inputOpsCode = puzzleInput
   .trim()
   .split(',')

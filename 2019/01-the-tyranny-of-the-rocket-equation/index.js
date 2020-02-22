@@ -1,8 +1,9 @@
 const fs = require('fs')
+const path = require('path')
 const calculateFuelRequired = require('./01')
 const calculateFuelRequiredWithFuel = require('./02')
 
-const puzzleInput = fs.readFileSync('./input.txt', 'utf8')
+const puzzleInput = fs.readFileSync(path.join(__dirname, 'input.txt'), 'utf8')
 const moduleMasses = puzzleInput
   .trim()
   .split('\n')
