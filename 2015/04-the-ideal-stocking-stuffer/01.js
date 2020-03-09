@@ -1,12 +1,10 @@
 var crypto = require('crypto')
 
-const HASH_PREFIX = '00000'
-
-const findLowestNumberForKey = (secretKey) => {
+const findLowestNumberForKey = (secretKey, hashPrefix) => {
   let number = 0
   let hash = crypto.createHash('md5').update(secretKey + number).digest('hex')
 
-  while (!hash.startsWith(HASH_PREFIX)) {
+  while (!hash.startsWith(hashPrefix)) {
     number++
     hash = crypto.createHash('md5').update(secretKey + number).digest('hex')
   }
