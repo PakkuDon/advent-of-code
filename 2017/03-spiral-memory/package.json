@@ -1,9 +1,0 @@
-{
-  "name": "03-spiral-memory",
-  "version": "1.0.0",
-  "main": "index.js",
-  "license": "MIT",
-  "devDependencies": {
-    "jest": "^22.0.4"
-  }
-}
