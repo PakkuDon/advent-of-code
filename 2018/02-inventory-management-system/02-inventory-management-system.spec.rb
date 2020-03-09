@@ -1,4 +1,4 @@
-require './02-inventory-management-system'
+require_relative './02-inventory-management-system'
 
 describe InventoryManagementSystem do
   it 'returns the characters shared by the two correct box IDs' do

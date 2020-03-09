@@ -1,4 +1,4 @@
-require "./01-memory-reallocation"
+require_relative "./01-memory-reallocation"
 
 describe MemoryReallocation do
   describe ".call" do

@@ -1,4 +1,4 @@
-require './anagram'
+require_relative './anagram'
 
 describe Anagram do
   describe "anagram?" do

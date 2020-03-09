@@ -1,4 +1,4 @@
-require "./01-high-entrophy-passphrases"
+require_relative "./01-high-entrophy-passphrases"
 
 describe PassphraseValidator do
   describe ".valid?" do

@@ -1,4 +1,4 @@
-require './01-inventory-management-system'
+require_relative './01-inventory-management-system'
 
 describe InventoryManagementSystem do
   it 'calculates checksum for a set of box IDs' do

@@ -1,4 +1,4 @@
-require './anagram'
+require_relative './anagram'
 
 class PassphraseValidator
   class << self
