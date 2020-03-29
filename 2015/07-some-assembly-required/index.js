@@ -8,5 +8,7 @@ const instructions = puzzleInput
   .split('\n')
 
 const signal = calculateSignal(instructions, 'a')
+const signalWithDifferentDefault = calculateSignal(instructions, 'a', { b: signal })
 
 console.log(`Part 1: ${signal}`)
+console.log(`Part 2: ${signalWithDifferentDefault}`)

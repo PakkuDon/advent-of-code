@@ -59,4 +59,13 @@ describe('calculateSignal', () => {
 
     expect(calculateSignal(instructions, 'a')).toBe(13)
   })
+
+  test('only writes to wires once', () => {
+    const instructions = [
+      '10 -> a',
+      '15 -> a',
+    ]
+
+    expect(calculateSignal(instructions, 'a')).toBe(10)
+  })
 })

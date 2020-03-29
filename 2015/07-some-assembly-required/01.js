@@ -11,11 +11,15 @@ const resolve = (signals, key) => {
   return signals[key]
 }
 
-const calculateSignal = (instructions, target) => {
-  let signals = {}
+const calculateSignal = (instructions, target, initialSignals = {}) => {
+  let signals = Object.assign({}, initialSignals)
 
   for (let instruction of instructions) {
     const [ _, input, key ] = instruction.match(/([\w\s]+)\ -> (\w+)/)
+
+    if (signals[key]) {
+      continue
+    }
 
     const tokens = input.split(' ')
     if (tokens.length === 1) {
