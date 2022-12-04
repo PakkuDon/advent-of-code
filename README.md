@@ -29,5 +29,5 @@ npm test 2022/
 ```sh
 node <path to index.js file>
 # Eg
-node node 2021/02-dive/index.js
+node 2021/02-dive/index.js
 ```
