@@ -1,7 +1,6 @@
 const fs = require('fs')
 const path = require('path')
-const part1 = require('./01')
-const part2 = require('./02')
+const { part1, part2 } = require('./solution')
 
 const puzzleInput = fs.readFileSync(path.join(__dirname, 'input.txt'), 'utf8')
 const values = puzzleInput.trim().split('\n')
