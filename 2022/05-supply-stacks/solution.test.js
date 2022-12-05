@@ -16,7 +16,7 @@ move 1 from 1 to 2
   })
 })
 
-xdescribe('part2', () => {
+describe('part2', () => {
   test('returns something', () => {
     const input = `    [D]     
 [N] [C]    
@@ -28,6 +28,6 @@ move 3 from 1 to 3
 move 2 from 2 to 1
 move 1 from 1 to 2
 `
-    expect(part2(input)).toEqual(0)
+    expect(part2(input)).toEqual("MCD")
   })
 })
