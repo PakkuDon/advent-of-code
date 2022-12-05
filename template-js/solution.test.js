@@ -5,11 +5,11 @@ describe('part1', () => {
     const input = [
       "a value"
     ]
-    expect(part1(input)).toEqual(0)
+    expect(part1(input)).toEqual(undefined)
   })
 })
 
-describe('part2', () => {
+xdescribe('part2', () => {
   test('returns something', () => {
     const input = [
       "a value"
