@@ -18,6 +18,12 @@ Solutions for [Advent of Code](https://adventofcode.com)
 ```sh
 npm ci
 ```
+- Add boilerplate for new exercise
+```sh
+cp -r template-js <path to folder>
+# Example
+# cp -r template-js 2022/05
+```
 - Run tests
 ```sh
 # Run all tests
