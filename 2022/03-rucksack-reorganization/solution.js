@@ -1,8 +1,8 @@
 const part1 = (rucksacks) => {
   let sum = 0
   const sharedItemTypes = []
-  
-  rucksacks.forEach(rucksack => {
+
+  rucksacks.forEach((rucksack) => {
     let compartments = []
     const midway = rucksack.length / 2
     compartments.push(rucksack.slice(0, midway))
@@ -17,7 +17,7 @@ const part1 = (rucksacks) => {
     }
   })
 
-  sharedItemTypes.forEach(itemType => {
+  sharedItemTypes.forEach((itemType) => {
     if (itemType === itemType.toLowerCase()) {
       sum += itemType.charCodeAt(0) - "a".charCodeAt(0) + 1
     } else {
@@ -37,13 +37,17 @@ const part2 = (rucksacks) => {
     groupedRucksacks.push(rucksacks.slice(i, i + 3))
   }
 
-  groupedRucksacks.forEach(group => {
+  groupedRucksacks.forEach((group) => {
     let foundSharedItem = false
     for (let i = 0; i < group.length; i++) {
       let rucksack = group[i]
       for (let j = 0; j < rucksack.length; j++) {
         let itemType = rucksack[j]
-        if (group[0].includes(itemType) && group[1].includes(itemType) && group[2].includes(itemType)) {
+        if (
+          group[0].includes(itemType) &&
+          group[1].includes(itemType) &&
+          group[2].includes(itemType)
+        ) {
           sharedItemTypes.push(itemType)
           foundSharedItem = true
           break
@@ -56,7 +60,7 @@ const part2 = (rucksacks) => {
     }
   })
 
-  sharedItemTypes.forEach(itemType => {
+  sharedItemTypes.forEach((itemType) => {
     if (itemType === itemType.toLowerCase()) {
       sum += itemType.charCodeAt(0) - "a".charCodeAt(0) + 1
     } else {

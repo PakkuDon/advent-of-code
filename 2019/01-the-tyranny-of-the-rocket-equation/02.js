@@ -1,6 +1,6 @@
-const calculateFuelRequired = require('./01')
+const calculateFuelRequired = require("./01")
 
-const calculateFuelRequiredWithFuel = mass => {
+const calculateFuelRequiredWithFuel = (mass) => {
   let fuelRequired = calculateFuelRequired(mass)
   let fuelRemaining = fuelRequired
 

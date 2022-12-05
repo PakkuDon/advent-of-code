@@ -49,16 +49,17 @@ const parseRecords = (records) => {
   let events = records.sort().map((record, index, array) => {
     let guardId
     let awake
-    const [ _, day, hour, minute ] = record.match(/\[\d{4}-\d{2}-(\d{2}) (\d{2}):(\d{2})/)
+    const [_, day, hour, minute] = record.match(
+      /\[\d{4}-\d{2}-(\d{2}) (\d{2}):(\d{2})/
+    )
 
-    if (record.includes('begins shift')) {
+    if (record.includes("begins shift")) {
       guardId = record.match(/#(\d+)/)[1]
       awake = true
     }
-    if (record.includes('falls asleep')) {
+    if (record.includes("falls asleep")) {
       awake = false
-    }
-    else if (record.includes('wakes up')) {
+    } else if (record.includes("wakes up")) {
       awake = true
     }
 

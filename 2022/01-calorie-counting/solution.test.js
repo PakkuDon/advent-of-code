@@ -1,7 +1,7 @@
-const { part1, part2 } = require('./solution')
+const { part1, part2 } = require("./solution")
 
-describe('part1', () => {
-  test('returns highest number of calories carried by an elf', () => {
+describe("part1", () => {
+  test("returns highest number of calories carried by an elf", () => {
     const input = [
       "1000",
       "2000",
@@ -22,8 +22,8 @@ describe('part1', () => {
   })
 })
 
-describe('part2', () => {
-  test('returns total number of calories carried by top three elves with the most calories', () => {
+describe("part2", () => {
+  test("returns total number of calories carried by top three elves with the most calories", () => {
     const input = [
       "1000",
       "2000",

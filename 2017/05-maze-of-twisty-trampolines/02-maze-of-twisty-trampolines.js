@@ -7,16 +7,16 @@ const call = (instructions) => {
     const previousPosition = currentPosition
     currentPosition += instructions[currentPosition]
 
-    instructions[previousPosition] += getIncrement(instructions[previousPosition])
+    instructions[previousPosition] += getIncrement(
+      instructions[previousPosition]
+    )
     stepsTaken++
   }
 
   return stepsTaken
 }
 
-const getIncrement = (currentOffset) => (
-  currentOffset >= 3 ? -1 : 1
-)
+const getIncrement = (currentOffset) => (currentOffset >= 3 ? -1 : 1)
 
 module.exports = {
   call,

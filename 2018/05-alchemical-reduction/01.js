@@ -1,5 +1,5 @@
 const alchemicReduction = (polymer) => {
-  let units = polymer.split('')
+  let units = polymer.split("")
   let finished = false
 
   while (!finished) {
@@ -9,13 +9,13 @@ const alchemicReduction = (polymer) => {
     for (let i = 1; i < units.length; i++) {
       const previous = remainingUnits[remainingUnits.length - 1]
       const current = units[i]
-      if (previous
-          && isSameCharacter(previous, current)
-          && isOppositePolarity(previous, current)
-        ) {
+      if (
+        previous &&
+        isSameCharacter(previous, current) &&
+        isOppositePolarity(previous, current)
+      ) {
         remainingUnits.pop()
-      }
-      else {
+      } else {
         remainingUnits.push(current)
       }
     }

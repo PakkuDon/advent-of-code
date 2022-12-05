@@ -1,11 +1,14 @@
 const part1 = (values) => {
   const totalCaloriesByElves = []
 
-  values.forEach(value => {
+  values.forEach((value) => {
     if (!value) {
       totalCaloriesByElves.push(0)
     } else {
-      totalCaloriesByElves[totalCaloriesByElves.length - 1] += parseInt(value, 10)
+      totalCaloriesByElves[totalCaloriesByElves.length - 1] += parseInt(
+        value,
+        10
+      )
     }
   })
 
@@ -15,16 +18,21 @@ const part1 = (values) => {
 const part2 = (values) => {
   const totalCaloriesByElves = []
 
-  values.forEach(value => {
+  values.forEach((value) => {
     if (!value) {
       totalCaloriesByElves.push(0)
     } else {
-      totalCaloriesByElves[totalCaloriesByElves.length - 1] += parseInt(value, 10)
+      totalCaloriesByElves[totalCaloriesByElves.length - 1] += parseInt(
+        value,
+        10
+      )
     }
   })
 
   totalCaloriesByElves.sort((a, b) => b - a)
-  return totalCaloriesByElves.slice(0, 3).reduce((total, current) => total + current)
+  return totalCaloriesByElves
+    .slice(0, 3)
+    .reduce((total, current) => total + current)
 }
 
 module.exports = {

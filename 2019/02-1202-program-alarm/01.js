@@ -10,12 +10,12 @@ const parser = (input) => {
 
     if (instruction === 1) {
       processedInput[destination] = a + b
-    }
-    else if (instruction === 2) {
+    } else if (instruction === 2) {
       processedInput[destination] = a * b
-    }
-    else {
-      throw new Error(`Invalid OpCode. Must be 1, 2, or 99. Instead got ${instruction}`)
+    } else {
+      throw new Error(
+        `Invalid OpCode. Must be 1, 2, or 99. Instead got ${instruction}`
+      )
     }
 
     index += 4

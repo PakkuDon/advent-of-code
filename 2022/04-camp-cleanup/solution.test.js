@@ -1,7 +1,7 @@
-const { part1, part2 } = require('./solution')
+const { part1, part2 } = require("./solution")
 
-describe('part1', () => {
-  test('returns how many assignment pairs contain another', () => {
+describe("part1", () => {
+  test("returns how many assignment pairs contain another", () => {
     const input = [
       "2-4,6-8",
       "2-3,4-5",
@@ -14,8 +14,8 @@ describe('part1', () => {
   })
 })
 
-describe('part2', () => {
-  test('returns how many assignment pairs have overlapping ranges', () => {
+describe("part2", () => {
+  test("returns how many assignment pairs have overlapping ranges", () => {
     const input = [
       "2-4,6-8",
       "2-3,4-5",

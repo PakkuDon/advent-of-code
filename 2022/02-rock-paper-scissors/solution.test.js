@@ -1,7 +1,7 @@
-const { part1, part2 } = require('./solution')
+const { part1, part2 } = require("./solution")
 
-describe('part1', () => {
-  test('calculates score for given moves', () => {
+describe("part1", () => {
+  test("calculates score for given moves", () => {
     const input = [
       ["A", "Y"],
       ["B", "X"],
@@ -11,8 +11,8 @@ describe('part1', () => {
   })
 })
 
-describe('part2', () => {
-  test('calculates score for given moves', () => {
+describe("part2", () => {
+  test("calculates score for given moves", () => {
     const input = [
       ["A", "Y"],
       ["B", "X"],

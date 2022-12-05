@@ -1,5 +1,7 @@
 const isNiceString = (string) => {
-  return hasRepeatingNonOverlappingPair(string) && hasRepeatingLetterWithGap(string)
+  return (
+    hasRepeatingNonOverlappingPair(string) && hasRepeatingLetterWithGap(string)
+  )
 }
 
 const hasRepeatingNonOverlappingPair = (string) => {
@@ -25,7 +27,10 @@ const hasRepeatingLetterWithGap = (string) => {
   }
 
   for (let index = 2; index < string.length; index++) {
-    if (string[index] === string[index - 2] && string[index] !== string[index - 1]) {
+    if (
+      string[index] === string[index - 2] &&
+      string[index] !== string[index - 1]
+    ) {
       return true
     }
   }

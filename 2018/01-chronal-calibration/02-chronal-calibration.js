@@ -9,7 +9,10 @@ const chronalCalibration = (frequencies) => {
       currentFrequency += frequencies[i]
       pastFrequencies.push(currentFrequency)
 
-      if (pastFrequencies.indexOf(currentFrequency) !== pastFrequencies.lastIndexOf(currentFrequency)) {
+      if (
+        pastFrequencies.indexOf(currentFrequency) !==
+        pastFrequencies.lastIndexOf(currentFrequency)
+      ) {
         return currentFrequency
       }
     }

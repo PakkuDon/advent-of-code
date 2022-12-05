@@ -1,7 +1,7 @@
 const alchemicReduction = (polymer) => {
   const uniqueUnits = polymer
     .toLowerCase()
-    .split('')
+    .split("")
     .reduce((characters, current) => {
       if (!characters.includes(current)) {
         characters.push(current)
@@ -10,8 +10,8 @@ const alchemicReduction = (polymer) => {
     }, [])
 
   const shortestPossiblePolymer = Math.min(
-    ...uniqueUnits.map(unit => {
-      const polymerWithoutUnit = polymer.replace(new RegExp(unit, 'gi'), '')
+    ...uniqueUnits.map((unit) => {
+      const polymerWithoutUnit = polymer.replace(new RegExp(unit, "gi"), "")
       return getReducedPolymerLength(polymerWithoutUnit)
     })
   )
@@ -20,7 +20,7 @@ const alchemicReduction = (polymer) => {
 }
 
 const getReducedPolymerLength = (polymer) => {
-  let units = polymer.split('')
+  let units = polymer.split("")
   let finished = false
 
   while (!finished) {
@@ -30,13 +30,13 @@ const getReducedPolymerLength = (polymer) => {
     for (let i = 1; i < units.length; i++) {
       const previous = remainingUnits[remainingUnits.length - 1]
       const current = units[i]
-      if (previous
-          && isSameCharacter(previous, current)
-          && isOppositePolarity(previous, current)
-        ) {
+      if (
+        previous &&
+        isSameCharacter(previous, current) &&
+        isOppositePolarity(previous, current)
+      ) {
         remainingUnits.pop()
-      }
-      else {
+      } else {
         remainingUnits.push(current)
       }
     }

@@ -1,8 +1,8 @@
-const fs = require('fs')
-const path = require('path')
-const { part1, part2 } = require('./solution')
+const fs = require("fs")
+const path = require("path")
+const { part1, part2 } = require("./solution")
 
-const puzzleInput = fs.readFileSync(path.join(__dirname, 'input.txt'), 'utf8')
+const puzzleInput = fs.readFileSync(path.join(__dirname, "input.txt"), "utf8")
 const values = puzzleInput.trimRight()
 
 console.log(`Part 1: ${part1(values)}`)

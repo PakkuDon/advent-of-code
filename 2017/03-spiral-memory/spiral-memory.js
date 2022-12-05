@@ -6,7 +6,7 @@ const calculateSteps = (startPoint) => {
   }
 
   const center = Math.ceil((ring - 1) / 2)
-  return (center - 1 + Math.abs(center - startPoint % ring))
+  return center - 1 + Math.abs(center - (startPoint % ring))
 }
 
 const getNearestSquare = (number) => {

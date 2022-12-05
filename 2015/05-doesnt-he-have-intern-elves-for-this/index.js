@@ -1,12 +1,10 @@
-const fs = require('fs')
-const path = require('path')
-const isNiceString = require('./01')
-const isNiceStringV2 = require('./02')
+const fs = require("fs")
+const path = require("path")
+const isNiceString = require("./01")
+const isNiceStringV2 = require("./02")
 
-const puzzleInput = fs.readFileSync(path.join(__dirname, 'input.txt'), 'utf8')
-const strings = puzzleInput
-  .trim()
-  .split('\n')
+const puzzleInput = fs.readFileSync(path.join(__dirname, "input.txt"), "utf8")
+const strings = puzzleInput.trim().split("\n")
 
 let numberOfNiceStrings = 0
 let numberOfNiceStringsV2 = 0

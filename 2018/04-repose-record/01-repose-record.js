@@ -24,17 +24,19 @@ const checkSum = (records) => {
   for (let guardId in minutesAsleepByGuardByDay) {
     minutesAsleepByGuard[guardId] = 0
     for (let day in minutesAsleepByGuardByDay[guardId]) {
-      minutesAsleepByGuard[guardId] += minutesAsleepByGuardByDay[guardId][day].length
+      minutesAsleepByGuard[guardId] +=
+        minutesAsleepByGuardByDay[guardId][day].length
     }
   }
 
   const mostMinutesSlept = Math.max(...Object.values(minutesAsleepByGuard))
-  const guardWithMostSleep = Object.keys(minutesAsleepByGuard)
-    .find(guardId => minutesAsleepByGuard[guardId] === mostMinutesSlept)
+  const guardWithMostSleep = Object.keys(minutesAsleepByGuard).find(
+    (guardId) => minutesAsleepByGuard[guardId] === mostMinutesSlept
+  )
 
   const tallySleepByMinutes = {}
   for (let day in minutesAsleepByGuardByDay[guardWithMostSleep]) {
-    minutesAsleepByGuardByDay[guardWithMostSleep][day].forEach(minute => {
+    minutesAsleepByGuardByDay[guardWithMostSleep][day].forEach((minute) => {
       if (!tallySleepByMinutes[minute]) {
         tallySleepByMinutes[minute] = 0
       }
@@ -43,8 +45,9 @@ const checkSum = (records) => {
   }
 
   const mostTimesAsleep = Math.max(...Object.values(tallySleepByMinutes))
-  const minuteMostSlept = Object.keys(tallySleepByMinutes)
-    .find(minute => tallySleepByMinutes[minute] === mostTimesAsleep)
+  const minuteMostSlept = Object.keys(tallySleepByMinutes).find(
+    (minute) => tallySleepByMinutes[minute] === mostTimesAsleep
+  )
 
   return guardWithMostSleep * minuteMostSlept
 }
@@ -55,16 +58,17 @@ const parseRecords = (records) => {
   let events = records.sort().map((record, index, array) => {
     let guardId
     let awake
-    const [ _, day, hour, minute ] = record.match(/\[\d{4}-\d{2}-(\d{2}) (\d{2}):(\d{2})/)
+    const [_, day, hour, minute] = record.match(
+      /\[\d{4}-\d{2}-(\d{2}) (\d{2}):(\d{2})/
+    )
 
-    if (record.includes('begins shift')) {
+    if (record.includes("begins shift")) {
       guardId = record.match(/#(\d+)/)[1]
       awake = true
     }
-    if (record.includes('falls asleep')) {
+    if (record.includes("falls asleep")) {
       awake = false
-    }
-    else if (record.includes('wakes up')) {
+    } else if (record.includes("wakes up")) {
       awake = true
     }
 

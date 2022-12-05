@@ -1,8 +1,8 @@
-const reposeRecord = require('./02-repose-record')
+const reposeRecord = require("./02-repose-record")
 
-describe('reposeRecord', () => {
-  describe('checkSum', () => {
-    test('it multiplies the guard ID by the minute it was asleep the most', () => {
+describe("reposeRecord", () => {
+  describe("checkSum", () => {
+    test("it multiplies the guard ID by the minute it was asleep the most", () => {
       const records = [
         "[1518-11-01 00:00] Guard #10 begins shift",
         "[1518-11-01 00:05] falls asleep",

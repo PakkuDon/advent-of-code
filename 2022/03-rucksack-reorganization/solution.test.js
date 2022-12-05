@@ -1,7 +1,7 @@
-const { part1, part2 } = require('./solution')
+const { part1, part2 } = require("./solution")
 
-describe('part1', () => {
-  test('returns sum of priority of item types', () => {
+describe("part1", () => {
+  test("returns sum of priority of item types", () => {
     const input = [
       "vJrwpWtwJgWrhcsFMMfFFhFp",
       "jqHRNqRjqzjGDLGLrsFMfFZSrLrFZsSL",
@@ -14,8 +14,8 @@ describe('part1', () => {
   })
 })
 
-describe('part2', () => {
-  test('returns sum of priority of item types', () => {
+describe("part2", () => {
+  test("returns sum of priority of item types", () => {
     const input = [
       "vJrwpWtwJgWrhcsFMMfFFhFp",
       "jqHRNqRjqzjGDLGLrsFMfFZSrLrFZsSL",

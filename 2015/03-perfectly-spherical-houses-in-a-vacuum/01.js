@@ -1,8 +1,8 @@
 const shiftByDirection = {
-  '^': { x: 0, y: 1 },
-  '>': { x: 1, y: 0 },
-  'v': { x: 0, y: -1 },
-  '<': { x: -1, y: 0 },
+  "^": { x: 0, y: 1 },
+  ">": { x: 1, y: 0 },
+  v: { x: 0, y: -1 },
+  "<": { x: -1, y: 0 },
 }
 
 const getNumberOfHousesVisited = (directions) => {
@@ -21,7 +21,7 @@ const getNumberOfHousesVisited = (directions) => {
   }
 
   const uniqueHouses = path
-    .map(coordinate => `${coordinate.x},${coordinate.y}`)
+    .map((coordinate) => `${coordinate.x},${coordinate.y}`)
     .reduce((uniqueCoordinates, coordinate) => {
       if (!uniqueCoordinates.includes(coordinate)) {
         uniqueCoordinates.push(coordinate)

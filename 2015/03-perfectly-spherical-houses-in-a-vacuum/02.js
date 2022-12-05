@@ -1,8 +1,8 @@
 const shiftByDirection = {
-  '^': { x: 0, y: 1 },
-  '>': { x: 1, y: 0 },
-  'v': { x: 0, y: -1 },
-  '<': { x: -1, y: 0 },
+  "^": { x: 0, y: 1 },
+  ">": { x: 1, y: 0 },
+  v: { x: 0, y: -1 },
+  "<": { x: -1, y: 0 },
 }
 
 const getHousesVisited = (directions) => {
@@ -31,17 +31,17 @@ const getNumberOfHousesVisitedWithRobotSanta = (directions) => {
     const direction = directions[i]
     if (i % 2 === 0) {
       santaDirections.push(direction)
-    }
-    else {
+    } else {
       robotDirections.push(direction)
     }
   }
 
-  const allHousesVisited = getHousesVisited(santaDirections)
-    .concat(getHousesVisited(robotDirections))
+  const allHousesVisited = getHousesVisited(santaDirections).concat(
+    getHousesVisited(robotDirections)
+  )
 
   const uniqueHouses = allHousesVisited
-    .map(coordinate => `${coordinate.x},${coordinate.y}`)
+    .map((coordinate) => `${coordinate.x},${coordinate.y}`)
     .reduce((uniqueCoordinates, coordinate) => {
       if (!uniqueCoordinates.includes(coordinate)) {
         uniqueCoordinates.push(coordinate)

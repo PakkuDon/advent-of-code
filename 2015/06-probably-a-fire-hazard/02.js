@@ -1,7 +1,9 @@
 const GRID_LENGTH = 1000
 
 const parseInstruction = (instruction) => {
-  let [ _input, type, x1, y1, x2, y2 ] = instruction.match(/([A-Za-z ]+) (\d+),(\d+) through (\d+),(\d+)/)
+  let [_input, type, x1, y1, x2, y2] = instruction.match(
+    /([A-Za-z ]+) (\d+),(\d+) through (\d+),(\d+)/
+  )
   return {
     type,
     x1: parseInt(x1, 10),
@@ -12,18 +14,18 @@ const parseInstruction = (instruction) => {
 }
 
 const processInstructions = (grid, instructions) => {
-  instructions.forEach(instruction => {
+  instructions.forEach((instruction) => {
     const { type, x1, y1, x2, y2 } = parseInstruction(instruction)
     let action
 
     switch (type) {
-      case 'toggle':
+      case "toggle":
         action = (brightness) => brightness + 2
         break
-      case 'turn on':
+      case "turn on":
         action = (brightness) => brightness + 1
         break
-      case 'turn off':
+      case "turn off":
         action = (brightness) => {
           if (brightness === 0) {
             return brightness

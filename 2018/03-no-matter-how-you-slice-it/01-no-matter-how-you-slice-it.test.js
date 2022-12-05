@@ -1,7 +1,7 @@
-const claimProcessor = require('./01-no-matter-how-you-slice-it.js')
+const claimProcessor = require("./01-no-matter-how-you-slice-it.js")
 
-describe('claimProcessor', () => {
-  test('it counts number of squares with more than 2 or 3 claims', () => {
+describe("claimProcessor", () => {
+  test("it counts number of squares with more than 2 or 3 claims", () => {
     const claims = [
       {
         x: 1,

@@ -1,12 +1,12 @@
-const fs = require('fs')
-const path = require('path')
-const parser = require('./01')
+const fs = require("fs")
+const path = require("path")
+const parser = require("./01")
 
-const puzzleInput = fs.readFileSync(path.join(__dirname, 'input.txt'), 'utf8')
+const puzzleInput = fs.readFileSync(path.join(__dirname, "input.txt"), "utf8")
 const inputOpsCode = puzzleInput
   .trim()
-  .split(',')
-  .map(value => parseInt(value, 10))
+  .split(",")
+  .map((value) => parseInt(value, 10))
 
 const lastObservedOpsCode = inputOpsCode.slice()
 lastObservedOpsCode[1] = 12

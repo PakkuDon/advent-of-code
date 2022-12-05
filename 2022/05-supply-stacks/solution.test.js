@@ -1,7 +1,7 @@
-const { part1, part2 } = require('./solution')
+const { part1, part2 } = require("./solution")
 
-describe('part1', () => {
-  test('returns something', () => {
+describe("part1", () => {
+  test("returns something", () => {
     const input = `    [D]     
 [N] [C]    
 [Z] [M] [P]
@@ -16,8 +16,8 @@ move 1 from 1 to 2
   })
 })
 
-describe('part2', () => {
-  test('returns something', () => {
+describe("part2", () => {
+  test("returns something", () => {
     const input = `    [D]     
 [N] [C]    
 [Z] [M] [P]

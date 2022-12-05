@@ -1,5 +1,5 @@
 const inverseCaptcha = (input) => {
-  const digits = input.split("").map(d => parseInt(d))
+  const digits = input.split("").map((d) => parseInt(d))
   let sum = 0
 
   for (let i = 0; i < digits.length; i++) {

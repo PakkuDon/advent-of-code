@@ -1,6 +1,6 @@
-const claimProcessor = require('./02-no-matter-how-you-slice-it.js')
+const claimProcessor = require("./02-no-matter-how-you-slice-it.js")
 
-describe('claimProcessor', () => {
+describe("claimProcessor", () => {
   test("returns claim that doesn't overlap with any others", () => {
     const claims = [
       {

@@ -1,12 +1,12 @@
 const isNiceString = (string) => {
-  return hasThreeVowels(string)
-    && hasDoubleLetter(string)
-    && doesNotContainSubstrings(string, ['ab', 'cd', 'pq', 'xy'])
+  return (
+    hasThreeVowels(string) &&
+    hasDoubleLetter(string) &&
+    doesNotContainSubstrings(string, ["ab", "cd", "pq", "xy"])
+  )
 }
 
-const hasThreeVowels = (string) => (
-  (string.match(/[aeiou]/g) || []).length >= 3
-)
+const hasThreeVowels = (string) => (string.match(/[aeiou]/g) || []).length >= 3
 
 const hasDoubleLetter = (string) => {
   for (let i = 1; i < string.length; i++) {
