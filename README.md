@@ -47,3 +47,9 @@ node <path to index.js file>
 # Eg
 node 2021/02-dive/index.js
 ```
+
+- Format code
+
+```sh
+npm run format
+```

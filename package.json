@@ -4,6 +4,7 @@
   "private": true,
   "license": "MIT",
   "scripts": {
+    "format": "prettier --write .",
     "test": "jest"
   },
   "devDependencies": {
