@@ -20,7 +20,7 @@ describe("part1", () => {
     const input = "nznrnfrfntjfmvfwmzdfjlvtqnbhcprsg"
     expect(part1(input)).toEqual(10)
   })
-  
+
   test("returns 11", () => {
     const input = "zcfzfwzzqfrljwzlrfnpqdbhtmscgvjw"
     expect(part1(input)).toEqual(11)
@@ -47,7 +47,7 @@ describe("part2", () => {
     const input = "nznrnfrfntjfmvfwmzdfjlvtqnbhcprsg"
     expect(part2(input)).toEqual(29)
   })
-  
+
   test("returns 26", () => {
     const input = "zcfzfwzzqfrljwzlrfnpqdbhtmscgvjw"
     expect(part2(input)).toEqual(26)
