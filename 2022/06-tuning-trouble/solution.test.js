@@ -27,9 +27,29 @@ describe("part1", () => {
   })
 })
 
-xdescribe("part2", () => {
-  test("returns something", () => {
+describe("part2", () => {
+  test("returns 19", () => {
     const input = "mjqjpqmgbljsphdztnvjfqwrcgsmlb"
-    expect(part2(input)).toEqual(0)
+    expect(part2(input)).toEqual(19)
+  })
+
+  test("returns 23", () => {
+    const input = "bvwbjplbgvbhsrlpgdmjqwftvncz"
+    expect(part2(input)).toEqual(23)
+  })
+
+  test("returns 23", () => {
+    const input = "nppdvjthqldpwncqszvftbrmjlhg"
+    expect(part2(input)).toEqual(23)
+  })
+
+  test("returns 29", () => {
+    const input = "nznrnfrfntjfmvfwmzdfjlvtqnbhcprsg"
+    expect(part2(input)).toEqual(29)
+  })
+  
+  test("returns 26", () => {
+    const input = "zcfzfwzzqfrljwzlrfnpqdbhtmscgvjw"
+    expect(part2(input)).toEqual(26)
   })
 })
