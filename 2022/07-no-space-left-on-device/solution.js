@@ -20,7 +20,6 @@ const createFolders = (lines) => {
           path = "/"
         } else if (folderName === "..") {
           path = path.substring(0, path.lastIndexOf("/"))
-          currentFolder = folders[path]
         } else {
           path = `${path}/${folderName}`
         }
@@ -34,30 +33,18 @@ const createFolders = (lines) => {
           folders[path] = newFolder
         }
 
-        if (!(folderName === "..")) {
-          currentFolder = folders[path]
-        }
+        currentFolder = folders[path]
       }
     } else {
-      let files = []
-      while (i < lines.length && lines[i][0] !== "$") {
-        files.push(lines[i])
-        i++
+      const fileInfo = line.split(" ")
+      if (fileInfo.includes("dir")) {
+        currentFolder.children.push(`${currentFolder.path}/${fileInfo[1]}`)
+      } else {
+        currentFolder.children.push({
+          name: fileInfo[1],
+          size: parseInt(fileInfo[0], 10),
+        })
       }
-
-      files.forEach((file) => {
-        const fileInfo = file.split(" ")
-        if (fileInfo.includes("dir")) {
-          currentFolder.children.push(`${currentFolder.path}/${fileInfo[1]}`)
-        } else {
-          currentFolder.children.push({
-            name: fileInfo[1],
-            size: parseInt(fileInfo[0], 10),
-          })
-        }
-      })
-      // Hack to prevent double increment when encountering another command
-      i--
     }
   }
 
