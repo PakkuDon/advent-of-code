@@ -7,9 +7,9 @@ describe("part1", () => {
   })
 })
 
-xdescribe("part2", () => {
-  test("returns something", () => {
-    const input = ["a value"]
-    expect(part2(input)).toEqual(0)
+describe("part2", () => {
+  test("returns the product of three numbers that have a sum of 2020", () => {
+    const input = [1721, 979, 366, 299, 675, 1456]
+    expect(part2(input)).toEqual(241861950)
   })
 })
