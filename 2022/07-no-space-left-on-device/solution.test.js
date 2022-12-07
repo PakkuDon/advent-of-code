@@ -31,7 +31,7 @@ describe("part1", () => {
   })
 })
 
-xdescribe("part2", () => {
+describe("part2", () => {
   test("returns something", () => {
     const input = [
       "$ cd /",
@@ -58,6 +58,6 @@ xdescribe("part2", () => {
       "5626152 d.ext",
       "7214296 k",
     ]
-    expect(part2(input)).toEqual(0)
+    expect(part2(input)).toEqual(24933642)
   })
 })
