@@ -1,3 +1,20 @@
+const getTreesToEdge = (grid, x, y) => {
+  const treesFromEdge = [[], [], [], []]
+  for (let x1 = x - 1; x1 >= 0; x1--) {
+    treesFromEdge[0].push(grid[x1][y])
+  }
+  for (let x1 = x + 1; x1 < grid.length; x1++) {
+    treesFromEdge[1].push(grid[x1][y])
+  }
+  for (let y1 = y - 1; y1 >= 0; y1--) {
+    treesFromEdge[2].push(grid[x][y1])
+  }
+  for (let y1 = y + 1; y1 < grid[x].length; y1++) {
+    treesFromEdge[3].push(grid[x][y1])
+  }
+  return treesFromEdge
+}
+
 const part1 = (input) => {
   input = input.trim()
   let visibleTrees = 0
@@ -12,21 +29,9 @@ const part1 = (input) => {
 
   for (let i = 1; i < matrix.length - 1; i++) {
     for (let j = 1; j < matrix[0].length - 1; j++) {
-      const surroundingTrees = [[], [], [], []]
-      for (let x = 0; x < i; x++) {
-        surroundingTrees[0].push(matrix[x][j])
-      }
-      for (let x = i + 1; x < matrix.length; x++) {
-        surroundingTrees[1].push(matrix[x][j])
-      }
-      for (let y = 0; y < j; y++) {
-        surroundingTrees[2].push(matrix[i][y])
-      }
-      for (let y = j + 1; y < matrix[i].length; y++) {
-        surroundingTrees[3].push(matrix[i][y])
-      }
+      const treesToEdge = getTreesToEdge(matrix, i, j)
 
-      if (surroundingTrees.some((trees) => Math.max(...trees) < matrix[i][j])) {
+      if (treesToEdge.some((trees) => Math.max(...trees) < matrix[i][j])) {
         visibleTrees++
       }
     }
@@ -47,35 +52,20 @@ const part2 = (input) => {
 
   for (let i = 1; i < matrix.length - 1; i++) {
     for (let j = 1; j < matrix[0].length - 1; j++) {
-      const treesUntilViewBlocked = [0, 0, 0, 0]
-      currentTreeHeight = matrix[i][j]
+      const currentTreeHeight = matrix[i][j]
+      const treesToEdge = getTreesToEdge(matrix, i, j)
+      const treesVisible = treesToEdge.map((treeHeights) => {
+        let indexOfTreeBlockingView = treeHeights.findIndex(
+          (height) => height >= currentTreeHeight
+        )
+        // No trees blocking view
+        if (indexOfTreeBlockingView === -1) {
+          return treeHeights.length
+        }
+        return indexOfTreeBlockingView + 1
+      })
 
-      for (let x = i - 1; x >= 0; x--) {
-        treesUntilViewBlocked[0]++
-        if (matrix[x][j] >= currentTreeHeight) {
-          break
-        }
-      }
-      for (let x = i + 1; x < matrix.length; x++) {
-        treesUntilViewBlocked[1]++
-        if (matrix[x][j] >= currentTreeHeight) {
-          break
-        }
-      }
-      for (let y = j - 1; y >= 0; y--) {
-        treesUntilViewBlocked[2]++
-        if (matrix[i][y] >= currentTreeHeight) {
-          break
-        }
-      }
-      for (let y = j + 1; y < matrix[i].length; y++) {
-        treesUntilViewBlocked[3]++
-        if (matrix[i][y] >= currentTreeHeight) {
-          break
-        }
-      }
-
-      const scenicScore = treesUntilViewBlocked.reduce(
+      const scenicScore = treesVisible.reduce(
         (total, current) => total * current
       )
       if (scenicScore > maxScenicScore) {
