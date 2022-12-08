@@ -19,7 +19,26 @@ const part1 = (input) => {
   return count
 }
 
-const part2 = (values) => {}
+const part2 = (input) => {
+  let count = 0
+
+  input.forEach((row) => {
+    const [policy, password] = row.split(": ")
+    const [positionA, positionB] = policy
+      .match(/\d+/g)
+      .map((value) => parseInt(value, 10))
+    const charToContain = policy.match(/[a-z]/i)[0]
+
+    if (
+      (password[positionA - 1] === charToContain) ^
+      (password[positionB - 1] === charToContain)
+    ) {
+      count++
+    }
+  })
+
+  return count
+}
 
 module.exports = {
   part1,
