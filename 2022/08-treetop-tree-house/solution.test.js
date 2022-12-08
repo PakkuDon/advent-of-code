@@ -13,9 +13,15 @@ describe("part1", () => {
   })
 })
 
-xdescribe("part2", () => {
-  test("returns something", () => {
-    const input = ["a value"]
-    expect(part2(input)).toEqual(0)
+describe("part2", () => {
+  test("returns scenic score for ideal spot for tree house", () => {
+    const input = `
+30373
+25512
+65332
+33549
+35390
+    `
+    expect(part2(input)).toEqual(8)
   })
 })
