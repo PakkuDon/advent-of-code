@@ -1,13 +1,18 @@
-const part1 = (rows) =>
-  rows.filter((row) => {
-    const lengths = row
+const getValidTriangles = (triangleLengths) =>
+  triangleLengths.filter((lengths) => {
+    const [a, b, c] = lengths.sort((a, b) => (a > b ? 1 : -1))
+    return a + b > c
+  })
+
+const part1 = (rows) => {
+  const parsedRows = rows.map((row) =>
+    row
       .trim()
       .split(/\s+/g)
       .map((length) => parseInt(length, 10))
-
-    const [a, b, c] = lengths.sort((a, b) => (a > b ? 1 : -1))
-    return a + b > c
-  }).length
+  )
+  return getValidTriangles(parsedRows).length
+}
 
 const part2 = (rows) => {
   const trianglesLengths = []
@@ -23,10 +28,7 @@ const part2 = (rows) => {
     }
   }
 
-  return trianglesLengths.filter((lengths) => {
-    const [a, b, c] = lengths.sort((a, b) => (a > b ? 1 : -1))
-    return a + b > c
-  }).length
+  return getValidTriangles(trianglesLengths).length
 }
 
 module.exports = {
