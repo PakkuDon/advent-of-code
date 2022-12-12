@@ -1,7 +1,5 @@
-const part1 = (input) => {
+const constructMap = (input) => {
   const map = []
-  let start
-  let end
 
   // Create cells from height map
   const rows = input.trim().split("\n")
@@ -11,10 +9,8 @@ const part1 = (input) => {
     cells.forEach((cell, x) => {
       let height
       if (cell === "S") {
-        start = { x, y }
         height = "a".charCodeAt(0) - "a".charCodeAt(0)
       } else if (cell === "E") {
-        end = { x, y }
         height = "z".charCodeAt(0) - "a".charCodeAt(0)
       } else {
         height = cell.charCodeAt(0) - "a".charCodeAt(0)
@@ -55,14 +51,17 @@ const part1 = (input) => {
     }
   }
 
-  // Count steps to end using breadth-first search
-  let queue = []
-  let current = map[start.y][start.x]
-  queue.push([current, 0])
+  return map
+}
 
-  while (!(current.x === end.x && current.y === end.y)) {
-    const [current, cost] = queue.shift()
-    if (current.x === end.x && current.y === end.y) {
+const getShortestPathLength = (map, origin, destination) => {
+  let queue = []
+  let current = map[origin.y][origin.x]
+  queue.push({ node: current, cost: 0 })
+
+  while (queue.length) {
+    const { node: current, cost } = queue.shift()
+    if (current.x === destination.x && current.y === destination.y) {
       return cost
     }
 
@@ -72,10 +71,35 @@ const part1 = (input) => {
         (cell) => !cell.visited
       )
       unvisitedNeighbours.forEach((neighbour) => {
-        queue.push([neighbour, cost + 1])
+        queue.push({ node: neighbour, cost: cost + 1 })
       })
     }
   }
+}
+
+const part1 = (input) => {
+  const matrix = input
+    .trim()
+    .split("\n")
+    .map((row) => row.split(""))
+  const map = constructMap(input)
+  let start
+  let end
+  for (let y = 0; y < matrix.length; y++) {
+    for (let x = 0; x < matrix[y].length; x++) {
+      if (matrix[y][x] === "S") {
+        start = { x, y }
+      } else if (matrix[y][x] === "E") {
+        end = { x, y }
+      }
+    }
+
+    if (start && end) {
+      break
+    }
+  }
+
+  return getShortestPathLength(map, start, end)
 }
 
 const part2 = (input) => {}
