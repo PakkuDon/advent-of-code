@@ -1,9 +1,9 @@
-const part1 = (input) => {
+const generatePath = (moves) => {
   let currentDirection = "N"
-  const directions = ["N", "E", "S", "W"]
   let position = { x: 0, y: 0 }
+  const directions = ["N", "E", "S", "W"]
+  const path = []
 
-  const moves = input.split(", ")
   moves.forEach((move) => {
     let direction = move.charAt(0)
     units = parseInt(move.substring(1), 10)
@@ -15,21 +15,34 @@ const part1 = (input) => {
       currentDirection = directions.slice(index - 1)[0]
     }
 
+    let shift
     switch (currentDirection) {
       case "E":
-        position.x += units
+        shift = (position) => position.x++
         break
       case "N":
-        position.y += units
+        shift = (position) => position.y++
         break
       case "W":
-        position.x -= units
+        shift = (position) => position.x--
         break
       case "S":
-        position.y -= units
+        shift = (position) => position.y--
         break
     }
+
+    for (let i = 0; i < units; i++) {
+      shift(position)
+      path.push({ ...position })
+    }
   })
+
+  return path
+}
+
+const part1 = (input) => {
+  const path = generatePath(input.split(", "))
+  const position = path[path.length - 1]
 
   return Math.abs(position.x) + Math.abs(position.y)
 }
