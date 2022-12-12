@@ -21,7 +21,6 @@ const constructMap = (input) => {
         y,
         height,
         neighbours: [],
-        visited: false,
       })
     })
 
@@ -55,6 +54,10 @@ const constructMap = (input) => {
 }
 
 const getShortestPathLength = (map, origin, destination) => {
+  const visited = []
+  map.forEach((row) => {
+    visited.push(new Array(row.length).fill().map(() => false))
+  })
   let queue = []
   let current = map[origin.y][origin.x]
   queue.push({ node: current, cost: 0 })
@@ -65,16 +68,18 @@ const getShortestPathLength = (map, origin, destination) => {
       return cost
     }
 
-    if (!current.visited) {
-      current.visited = true
+    if (!visited[current.y][current.x]) {
+      visited[current.y][current.x] = true
       let unvisitedNeighbours = current.neighbours.filter(
-        (cell) => !cell.visited
+        (cell) => !visited[cell.y][cell.x]
       )
       unvisitedNeighbours.forEach((neighbour) => {
         queue.push({ node: neighbour, cost: cost + 1 })
       })
     }
   }
+
+  return Number.MAX_SAFE_INTEGER
 }
 
 const part1 = (input) => {
@@ -102,7 +107,28 @@ const part1 = (input) => {
   return getShortestPathLength(map, start, end)
 }
 
-const part2 = (input) => {}
+const part2 = (input) => {
+  const matrix = input
+    .trim()
+    .split("\n")
+    .map((row) => row.split(""))
+  const map = constructMap(input)
+  let origins = []
+  let destination
+  for (let y = 0; y < matrix.length; y++) {
+    for (let x = 0; x < matrix[y].length; x++) {
+      if (matrix[y][x] === "S" || matrix[y][x] === "a") {
+        origins.push({ x, y })
+      } else if (matrix[y][x] === "E") {
+        destination = { x, y }
+      }
+    }
+  }
+
+  return origins
+    .map((origin) => getShortestPathLength(map, origin, destination))
+    .sort((a, b) => (a > b ? 1 : -1))[0]
+}
 
 module.exports = {
   part1,

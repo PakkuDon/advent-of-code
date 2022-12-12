@@ -12,9 +12,14 @@ abdefghi`
   })
 })
 
-xdescribe("part2", () => {
-  test("returns something", () => {
-    const input = ["a value"]
-    expect(part2(input)).toEqual(0)
+describe("part2", () => {
+  test("returns fewest steps from any starting point to reach destination", () => {
+    const input = `
+Sabqponm
+abcryxxl
+accszExk
+acctuvwj
+abdefghi`
+    expect(part2(input)).toEqual(29)
   })
 })
