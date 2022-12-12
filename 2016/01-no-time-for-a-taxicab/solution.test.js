@@ -17,9 +17,9 @@ describe("part1", () => {
   })
 })
 
-xdescribe("part2", () => {
-  test("returns something", () => {
-    const input = ["a value"]
-    expect(part2(input)).toEqual(0)
+describe("part2", () => {
+  test("returns distance of first block visited twice", () => {
+    const input = "R8, R4, R4, R8"
+    expect(part2(input)).toEqual(4)
   })
 })

@@ -47,7 +47,20 @@ const part1 = (input) => {
   return Math.abs(position.x) + Math.abs(position.y)
 }
 
-const part2 = (values) => {}
+const part2 = (input) => {
+  const path = generatePath(input.split(", "))
+  const set = new Set()
+
+  for (let i = 0; i < path.length; i++) {
+    const position = path[i]
+    const currentSetSize = set.size
+    set.add(JSON.stringify(position))
+
+    if (set.size === currentSetSize) {
+      return Math.abs(position.x) + Math.abs(position.y)
+    }
+  }
+}
 
 module.exports = {
   part1,
