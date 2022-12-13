@@ -54,7 +54,27 @@ const part1 = (input) => {
   )
 }
 
-const part2 = (values) => {}
+const part2 = (input) => {
+  const packets = input
+    .split("\n")
+    .map((row) => row.trim())
+    .filter((row) => row)
+    .map((value) => eval(value))
+
+  packets.push([[2]])
+  packets.push([[6]])
+
+  const sortedPackets = packets.slice().sort(isOrdered).reverse()
+
+  const startIndex = sortedPackets.findIndex(
+    (packet) => JSON.stringify(packet) === "[[2]]"
+  )
+  const endIndex = sortedPackets.findIndex(
+    (packet) => JSON.stringify(packet) === "[[6]]"
+  )
+
+  return (startIndex + 1) * (endIndex + 1)
+}
 
 module.exports = {
   part1,
