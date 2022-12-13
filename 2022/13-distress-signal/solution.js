@@ -1,4 +1,4 @@
-const isOrdered = (left, right) => {
+const comparator = (left, right) => {
   if (Number.isInteger(left) && Number.isInteger(right)) {
     if (left === right) {
       return 0
@@ -17,9 +17,9 @@ const isOrdered = (left, right) => {
   }
 
   for (let i = 0; i < Math.min(left.length, right.length); i++) {
-    const ordered = isOrdered(left[i], right[i])
-    if (ordered !== 0) {
-      return ordered
+    const difference = comparator(left[i], right[i])
+    if (difference !== 0) {
+      return difference
     }
   }
 
@@ -43,7 +43,7 @@ const part1 = (input) => {
 
   for (let i = 0; i < pairs.length; i++) {
     const [left, right] = pairs[i]
-    if (isOrdered(left, right) === 1) {
+    if (comparator(left, right) === 1) {
       indicesOfOrderedPairs.push(i)
     }
   }
@@ -64,7 +64,7 @@ const part2 = (input) => {
   packets.push([[2]])
   packets.push([[6]])
 
-  const sortedPackets = packets.slice().sort(isOrdered).reverse()
+  const sortedPackets = packets.slice().sort(comparator).reverse()
 
   const startIndex = sortedPackets.findIndex(
     (packet) => JSON.stringify(packet) === "[[2]]"
