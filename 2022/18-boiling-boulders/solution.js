@@ -1,3 +1,29 @@
+const getCubesFromInput = (scanResults) => {
+  const cubes = scanResults.map((row) => {
+    const [x, y, z] = row.split(",").map((value) => parseInt(value))
+
+    return { x, y, z }
+  })
+
+  cubes.forEach((cube, outerIndex) => {
+    const neighbours = cubes.filter((anotherCube, innerIndex) => {
+      if (outerIndex === innerIndex) {
+        return false
+      }
+      if (Math.abs(cube.x - anotherCube.x) === 1) {
+        return cube.y === anotherCube.y && cube.z === anotherCube.z
+      } else if (Math.abs(cube.y - anotherCube.y) === 1) {
+        return cube.x === anotherCube.x && cube.z === anotherCube.z
+      } else if (Math.abs(cube.z - anotherCube.z) === 1) {
+        return cube.y === anotherCube.y && cube.x === anotherCube.x
+      }
+    })
+    cube.neighbours = neighbours
+  })
+
+  return cubes
+}
+
 const floodFill = (grid, x, y, z) => {
   const gridDepth = grid.length
   const gridHeight = grid[0].length
@@ -53,27 +79,7 @@ const floodFill = (grid, x, y, z) => {
 }
 
 const part1 = (scanResults) => {
-  const cubes = scanResults.map((row) => {
-    const [x, y, z] = row.split(",").map((value) => parseInt(value))
-
-    return { x, y, z }
-  })
-
-  cubes.forEach((cube, outerIndex) => {
-    const neighbours = cubes.filter((anotherCube, innerIndex) => {
-      if (outerIndex === innerIndex) {
-        return false
-      }
-      if (Math.abs(cube.x - anotherCube.x) === 1) {
-        return cube.y === anotherCube.y && cube.z === anotherCube.z
-      } else if (Math.abs(cube.y - anotherCube.y) === 1) {
-        return cube.x === anotherCube.x && cube.z === anotherCube.z
-      } else if (Math.abs(cube.z - anotherCube.z) === 1) {
-        return cube.y === anotherCube.y && cube.x === anotherCube.x
-      }
-    })
-    cube.neighbours = neighbours
-  })
+  const cubes = getCubesFromInput(scanResults)
 
   return cubes.reduce((total, cube) => {
     return total + (6 - cube.neighbours.length)
@@ -81,32 +87,13 @@ const part1 = (scanResults) => {
 }
 
 const part2 = (scanResults) => {
-  const cubes = scanResults.map((row) => {
-    const [x, y, z] = row.split(",").map((value) => parseInt(value))
-
-    return { x, y, z }
-  })
-
-  cubes.forEach((cube, outerIndex) => {
-    const neighbours = cubes.filter((anotherCube, innerIndex) => {
-      if (outerIndex === innerIndex) {
-        return false
-      }
-      if (Math.abs(cube.x - anotherCube.x) === 1) {
-        return cube.y === anotherCube.y && cube.z === anotherCube.z
-      } else if (Math.abs(cube.y - anotherCube.y) === 1) {
-        return cube.x === anotherCube.x && cube.z === anotherCube.z
-      } else if (Math.abs(cube.z - anotherCube.z) === 1) {
-        return cube.y === anotherCube.y && cube.x === anotherCube.x
-      }
-    })
-    cube.neighbours = neighbours
-  })
+  const cubes = getCubesFromInput(scanResults)
 
   // Place cubes in grid
-  const gridDepth = Math.max(...cubes.map((cube) => cube.z)) + 5
-  const gridHeight = Math.max(...cubes.map((cube) => cube.y)) + 5
-  const gridWidth = Math.max(...cubes.map((cube) => cube.x)) + 5
+  // Pad grid so we have a place to start flood fill from
+  const gridDepth = Math.max(...cubes.map((cube) => cube.z)) + 2
+  const gridHeight = Math.max(...cubes.map((cube) => cube.y)) + 2
+  const gridWidth = Math.max(...cubes.map((cube) => cube.x)) + 2
   const grid = new Array(gridDepth)
     .fill()
     .map(() =>
@@ -143,7 +130,7 @@ const part2 = (scanResults) => {
         neighbour.z < gridDepth
     )
 
-    // Add side if it has been touched by water
+    // Add side if cube has been touched by water
     // Edges that are at the boundary of the grid are assumed to be visible
     return (
       total +
