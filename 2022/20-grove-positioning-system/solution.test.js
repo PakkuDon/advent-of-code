@@ -7,9 +7,9 @@ describe("part1", () => {
   })
 })
 
-xdescribe("part2", () => {
-  test("returns something", () => {
-    const input = ["a value"]
-    expect(part2(input)).toEqual(0)
+describe("part2", () => {
+  test("returns the sum of coordinates after applying decryption key", () => {
+    const input = [1, 2, -3, 3, -2, 0, 4]
+    expect(part2(input)).toEqual(1623178306)
   })
 })
