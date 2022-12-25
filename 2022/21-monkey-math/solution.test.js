@@ -23,9 +23,25 @@ describe("part1", () => {
   })
 })
 
-xdescribe("part2", () => {
-  test("returns something", () => {
-    const input = ["a value"]
-    expect(part2(input)).toEqual(0)
+describe("part2", () => {
+  test("returns the number needed to pass root's equality test", () => {
+    const input = [
+      "root: pppw + sjmn",
+      "dbpl: 5",
+      "cczh: sllz + lgvd",
+      "zczc: 2",
+      "ptdq: humn - dvpt",
+      "dvpt: 3",
+      "lfqf: 4",
+      "humn: 5",
+      "ljgn: 2",
+      "sjmn: drzm * dbpl",
+      "sllz: 4",
+      "pppw: cczh / lfqf",
+      "lgvd: ljgn * ptdq",
+      "drzm: hmdt - zczc",
+      "hmdt: 32",
+    ]
+    expect(part2(input)).toEqual(301)
   })
 })
