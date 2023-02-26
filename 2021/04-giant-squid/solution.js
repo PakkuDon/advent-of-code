@@ -1,3 +1,16 @@
+const parseInput = (input) => {
+  const [callInput, ...boardInput] = input.split("\n\n")
+  const calls = callInput
+    .trim()
+    .split(",")
+    .map((value) => Number(value))
+  const boards = boardInput.map((boardString) => {
+    const rows = boardString.split("\n")
+    return rows.map((row) => row.split(/\s+/).map((value) => Number(value)))
+  })
+  return { calls, boards }
+}
+
 const hasHorizontalWin = (board) => {
   for (let row of board) {
     if (row.every((cell) => cell === "x")) {
@@ -20,17 +33,20 @@ const hasVerticalWin = (board) => {
   return false
 }
 
+const sumUnmarkedCells = (board) => {
+  let sumOfUnmarkedCells = 0
+  for (let row of board) {
+    for (let cell of row) {
+      if (cell !== "x") {
+        sumOfUnmarkedCells += cell
+      }
+    }
+  }
+  return sumOfUnmarkedCells
+}
+
 const part1 = (input) => {
-  // Parse input
-  const [callInput, ...boardInput] = input.split("\n\n")
-  const calls = callInput
-    .trim()
-    .split(",")
-    .map((value) => Number(value))
-  const boards = boardInput.map((boardString) => {
-    const rows = boardString.split("\n")
-    return rows.map((row) => row.split(/\s+/).map((value) => Number(value)))
-  })
+  const { calls, boards } = parseInput(input)
 
   // Find winning board
   let winningBoard
@@ -58,16 +74,7 @@ const part1 = (input) => {
     }
   }
 
-  // Calculate sum of winning board
-  let sumOfUnmarkedCells = 0
-  for (let row of winningBoard) {
-    for (let cell of row) {
-      if (cell !== "x") {
-        sumOfUnmarkedCells += cell
-      }
-    }
-  }
-  return sumOfUnmarkedCells * lastCall
+  return sumUnmarkedCells(winningBoard) * lastCall
 }
 
 const part2 = (values) => {}
