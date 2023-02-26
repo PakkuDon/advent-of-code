@@ -82,7 +82,45 @@ const part1 = (input) => {
   return sumUnmarkedCells(winningBoard) * lastCall
 }
 
-const part2 = (values) => {}
+const part2 = (input) => {
+  const { calls, boards } = parseInput(input)
+  const completedBoardIndices = []
+  let lastCall
+
+  for (let call of calls) {
+    for (let i = 0; i < boards.length; i++) {
+      if (completedBoardIndices.includes(i)) {
+        continue
+      }
+      const board = boards[i]
+
+      // Mark called tile if included in board
+      for (let y = 0; y < board.length; y++) {
+        for (let x = 0; x < board[y].length; x++) {
+          if (board[y][x] === call) {
+            board[y][x] = "x"
+            break
+          }
+        }
+      }
+
+      // If board has a bingo, mark as done
+      if (hasHorizontalWin(board) || hasVerticalWin(board)) {
+        completedBoardIndices.push(i)
+      }
+    }
+
+    // Exit once all boards have been marked as done
+    if (completedBoardIndices.length === boards.length) {
+      lastCall = call
+      break
+    }
+  }
+
+  const lastCompletedBoard =
+    boards[completedBoardIndices[completedBoardIndices.length - 1]]
+  return sumUnmarkedCells(lastCompletedBoard) * lastCall
+}
 
 module.exports = {
   part1,
