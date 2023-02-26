@@ -6,7 +6,12 @@ const parseInput = (input) => {
     .map((value) => Number(value))
   const boards = boardInput.map((boardString) => {
     const rows = boardString.split("\n")
-    return rows.map((row) => row.split(/\s+/).map((value) => Number(value)))
+    return rows.map((row) =>
+      row
+        .trim()
+        .split(/\s+/)
+        .map((value) => Number(value))
+    )
   })
   return { calls, boards }
 }
