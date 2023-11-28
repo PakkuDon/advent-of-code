@@ -1,10 +1,5 @@
-const part1 = (input) => {
-  const grid = [
-    [1, 2, 3],
-    [4, 5, 6],
-    [7, 8, 9],
-  ]
-  let current = { x: 1, y: 1 }
+const getSecurityCode = (input, keypad, startingPosition) => {
+  let current = { ...startingPosition }
   const rows = input.trim().split("\n")
   code = ""
 
@@ -12,22 +7,22 @@ const part1 = (input) => {
     row.split("").forEach((instruction) => {
       switch (instruction) {
         case "U":
-          if (current.y > 0) {
+          if (keypad[current.y - 1] && keypad[current.y - 1][current.x]) {
             current.y--
           }
           break
         case "D":
-          if (current.y < 2) {
+          if (keypad[current.y + 1] && keypad[current.y + 1][current.x]) {
             current.y++
           }
           break
         case "L":
-          if (current.x > 0) {
+          if (keypad[current.y][current.x - 1]) {
             current.x--
           }
           break
         case "R":
-          if (current.x < 2) {
+          if (keypad[current.y][current.x + 1]) {
             current.x++
           }
           break
@@ -36,56 +31,32 @@ const part1 = (input) => {
       }
     })
 
-    code += grid[current.y][current.x]
+    code += keypad[current.y][current.x]
   })
 
   return code
 }
 
+const part1 = (input) => {
+  const keypad = [
+    [1, 2, 3],
+    [4, 5, 6],
+    [7, 8, 9],
+  ]
+  const startingPosition = { x: 1, y: 1 }
+  return getSecurityCode(input, keypad, startingPosition)
+}
+
 const part2 = (input) => {
-  const grid = [
+  const keypad = [
     ["", "", 1, "", ""],
     ["", 2, 3, 4, ""],
     [5, 6, 7, 8, 9],
     ["", "A", "B", "C", ""],
     ["", "", "D", "", ""],
   ]
-  let current = { x: 0, y: 2 }
-  const rows = input.trim().split("\n")
-  code = ""
-
-  rows.forEach((row) => {
-    row.split("").forEach((instruction) => {
-      switch (instruction) {
-        case "U":
-          if (grid[current.y - 1] && grid[current.y - 1][current.x]) {
-            current.y--
-          }
-          break
-        case "D":
-          if (grid[current.y + 1] && grid[current.y + 1][current.x]) {
-            current.y++
-          }
-          break
-        case "L":
-          if (grid[current.y][current.x - 1]) {
-            current.x--
-          }
-          break
-        case "R":
-          if (grid[current.y][current.x + 1]) {
-            current.x++
-          }
-          break
-        default:
-          console.error(`Unexpected instruction ${instruction} received`)
-      }
-    })
-
-    code += grid[current.y][current.x]
-  })
-
-  return code
+  const startingPosition = { x: 0, y: 2 }
+  return getSecurityCode(input, keypad, startingPosition)
 }
 
 module.exports = {
