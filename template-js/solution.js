@@ -1,6 +1,6 @@
-const part1 = (values) => {}
+const part1 = (input) => {}
 
-const part2 = (values) => {}
+const part2 = (input) => {}
 
 module.exports = {
   part1,
