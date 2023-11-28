@@ -10,12 +10,12 @@ UUUUD`
   })
 })
 
-xdescribe("part2", () => {
-  test("returns something", () => {
+describe("part2", () => {
+  test("returns code given instructions with new keypad", () => {
     const input = `ULL
 RRDDD
 LURDL
 UUUUD`
-    expect(part2(input)).toEqual(0)
+    expect(part2(input)).toEqual("5DB3")
   })
 })
