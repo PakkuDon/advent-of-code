@@ -12,6 +12,7 @@ Solutions for [Advent of Code](https://adventofcode.com)
 - [2020](2020)
 - [2021](2021)
 - [2022](2022)
+- [2023](2023)
 
 ## Development instructions
 
