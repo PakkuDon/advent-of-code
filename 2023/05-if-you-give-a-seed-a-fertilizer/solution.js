@@ -48,7 +48,7 @@ const part1 = (input) => {
 }
 
 const part2 = (input) => {
-  console.warn("2023 Day 5 Part 2 currently takes >30 minutes to run.")
+  console.log("2023 Day 5 Part 2 currently takes ~5 minutes to run.")
   const [seedInput, ...mapInputs] = input
     .split("\n\n")
     .map((mapInput) => mapInput.match(/\d+/g))
@@ -79,9 +79,9 @@ const part2 = (input) => {
       for (let i = 0; i < maps.length; i++) {
         // Map value to value in next map
         for (let j = 0; j < maps[i].length; j++) {
-          const [destinationStart, sourceStart, range] = maps[i][j]
-          if (value >= sourceStart && value < sourceStart + range) {
-            value = destinationStart + Math.abs(value - sourceStart)
+          // If value is between source range map value to destination
+          if (value >= maps[i][j][1] && value < maps[i][j][1] + maps[i][j][2]) {
+            value = maps[i][j][0] + Math.abs(value - maps[i][j][1])
             break
           }
         }
