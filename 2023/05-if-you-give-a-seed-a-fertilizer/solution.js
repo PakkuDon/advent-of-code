@@ -1,27 +1,8 @@
 const part1 = (input) => {
-  const [
-    seeds,
-    seedToSoilValues,
-    soilToFertilizerValues,
-    fertilizerToWaterValues,
-    waterToLightValues,
-    lightToTemperatureValues,
-    temperatureToHumidityValues,
-    humidityToLocationValues,
-  ] = input
+  const [seeds, ...maps] = input
     .split("\n\n")
     .map((mapInput) => mapInput.match(/\d+/g))
     .map((row) => row.map((value) => parseInt(value, 10)))
-
-  const maps = [
-    seedToSoilValues,
-    soilToFertilizerValues,
-    fertilizerToWaterValues,
-    waterToLightValues,
-    lightToTemperatureValues,
-    temperatureToHumidityValues,
-    humidityToLocationValues,
-  ]
 
   const seedLocations = seeds.map((seed) => {
     // Iterate through each seed and find its location
@@ -59,6 +40,7 @@ const part2 = (input) => {
     const [start, length] = seedInput.slice(i, i + 2)
     seedRanges.push({ start, end: start + length - 1, length })
   }
+
   const maps = mapInputs.map((input) => {
     const map = []
     for (let i = 0; i < input.length; i += 3) {
