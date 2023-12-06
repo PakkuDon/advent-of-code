@@ -1,3 +1,5 @@
+const canWinRace = (time, distance, speed) => (time - speed) * speed > distance
+
 const part1 = (input) => {
   const rows = input.trim().split("\n")
   const times = rows[0].match(/\d+/g).map((value) => parseInt(value, 10))
@@ -9,7 +11,7 @@ const part1 = (input) => {
 
     let count = 0
     for (let speed = 1; speed < time; speed++) {
-      if ((time - speed) * speed > distance) {
+      if (canWinRace(time, distance, speed)) {
         count++
       }
     }
@@ -26,7 +28,7 @@ const part2 = (input) => {
   let count = 0
 
   for (let speed = 1; speed < time; speed++) {
-    if ((time - speed) * speed > distance) {
+    if (canWinRace(time, distance, speed)) {
       count++
     }
   }
