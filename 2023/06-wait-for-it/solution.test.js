@@ -9,9 +9,11 @@ Distance:  9  40  200`
   })
 })
 
-xdescribe("part2", () => {
-  test("returns something", () => {
-    const input = `puzzle input`
-    expect(part2(input)).toEqual(0)
+describe("part2", () => {
+  test("returns number of ways to win race", () => {
+    const input = `
+Time:      7  15   30
+Distance:  9  40  200`
+    expect(part2(input)).toEqual(71503)
   })
 })

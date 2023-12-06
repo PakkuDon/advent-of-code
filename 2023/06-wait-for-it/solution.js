@@ -19,7 +19,20 @@ const part1 = (input) => {
   return counts.reduce((total, current) => total * current, 1)
 }
 
-const part2 = (input) => {}
+const part2 = (input) => {
+  const rows = input.trim().split("\n")
+  const time = parseInt(rows[0].match(/\d+/g).join(""), 10)
+  const distance = parseInt(rows[1].match(/\d+/g).join(""), 10)
+  let count = 0
+
+  for (let speed = 1; speed < time; speed++) {
+    if ((time - speed) * speed > distance) {
+      count++
+    }
+  }
+
+  return count
+}
 
 module.exports = {
   part1,
