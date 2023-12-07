@@ -1,3 +1,39 @@
+const getTallyForHand = (hand) => {
+  const tally = {}
+  hand.split("").forEach((character) => {
+    if (tally[character]) {
+      tally[character]++
+    } else {
+      tally[character] = 1
+    }
+  })
+  return tally
+}
+
+const getType = (tally) => {
+  const tallyValues = Object.values(tally)
+  let type = ""
+  if (tallyValues.some((value) => value === 5)) {
+    type = "fiveOfAKind"
+  } else if (tallyValues.some((value) => value === 4)) {
+    type = "fourOfAKind"
+  } else if (
+    tallyValues.length === 2 &&
+    [2, 3].every((value) => tallyValues.includes(value))
+  ) {
+    type = "fullHouse"
+  } else if (tallyValues.some((value) => value === 3)) {
+    type = "threeOfAKind"
+  } else if (tallyValues.filter((value) => value === 2).length === 2) {
+    type = "twoPair"
+  } else if (tallyValues.filter((value) => value === 2).length === 1) {
+    type = "onePair"
+  } else if (tallyValues.length === 5) {
+    type = "highCard"
+  }
+  return type
+}
+
 const part1 = (input) => {
   const cardsByStrength = [
     "A",
@@ -30,36 +66,8 @@ const part1 = (input) => {
     .split("\n")
     .map((row) => {
       const [hand, bid] = row.trim().split(/\s+/)
-      const tally = {}
-
-      hand.split("").forEach((character) => {
-        if (tally[character]) {
-          tally[character]++
-        } else {
-          tally[character] = 1
-        }
-      })
-
-      let type = ""
-      const tallyValues = Object.values(tally)
-      if (tallyValues.some((value) => value === 5)) {
-        type = "fiveOfAKind"
-      } else if (tallyValues.some((value) => value === 4)) {
-        type = "fourOfAKind"
-      } else if (
-        tallyValues.length === 2 &&
-        [2, 3].every((value) => tallyValues.includes(value))
-      ) {
-        type = "fullHouse"
-      } else if (tallyValues.some((value) => value === 3)) {
-        type = "threeOfAKind"
-      } else if (tallyValues.filter((value) => value === 2).length === 2) {
-        type = "twoPair"
-      } else if (tallyValues.filter((value) => value === 2).length === 1) {
-        type = "onePair"
-      } else if (tallyValues.length === 5) {
-        type = "highCard"
-      }
+      const tally = getTallyForHand(hand)
+      const type = getType(tally)
 
       return {
         hand,
