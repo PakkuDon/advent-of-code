@@ -1,3 +1,27 @@
+const parseGraphInput = (input) => {
+  const graph = {}
+
+  input.split("\n").forEach((row) => {
+    const [origin, L, R] = row.match(/[\dA-Z]{3}/g)
+    graph[origin] = { L, R }
+  })
+
+  return graph
+}
+
+const calculateStepsToEnd = ({ graph, moves, origin, isComplete }) => {
+  let steps = 0
+  let current = origin
+
+  while (!isComplete(current)) {
+    const nextStep = moves[steps % moves.length]
+    current = graph[current][nextStep]
+    steps++
+  }
+
+  return steps
+}
+
 const findGreatestCommonDivisor = (a, b) => {
   if (a > 0) {
     return findGreatestCommonDivisor(b % a, a)
@@ -10,48 +34,34 @@ const findLeastCommonMultiple = (a, b) =>
 
 const part1 = (input) => {
   // Parse input
-  const [moveInput, mapInput] = input.trim().split("\n\n")
-  const nodes = {}
-
-  mapInput.split("\n").forEach((row) => {
-    const [origin, L, R] = row.match(/[A-Z]{3}/g)
-    nodes[origin] = { L, R }
-  })
+  const [moveInput, graphInput] = input.trim().split("\n\n")
+  const nodes = parseGraphInput(graphInput)
   const moves = moveInput.split("")
 
-  // Process steps
-  let current = "AAA"
-  let steps = 0
-  while (current !== "ZZZ") {
-    const nextStep = moves[steps % moves.length]
-    current = nodes[current][nextStep]
-    steps++
-  }
-
-  return steps
+  return calculateStepsToEnd({
+    graph: nodes,
+    moves,
+    origin: "AAA",
+    isComplete: (current) => current === "ZZZ",
+  })
 }
 
 const part2 = (input) => {
   // Parse input
-  const [moveInput, mapInput] = input.trim().split("\n\n")
-  const nodes = {}
-
-  mapInput.split("\n").forEach((row) => {
-    const [origin, L, R] = row.match(/[\dA-Z]{3}/g)
-    nodes[origin] = { L, R }
-  })
+  const [moveInput, graphInput] = input.trim().split("\n\n")
+  const nodes = parseGraphInput(graphInput)
   const moves = moveInput.split("")
 
   // Calculate how many steps it takes for each starting node to reach end node
-  let currentPositions = Object.keys(nodes).filter((key) => key.endsWith("A"))
+  let startingNodes = Object.keys(nodes).filter((key) => key.endsWith("A"))
   const stepsToReachZ = []
-  currentPositions.forEach((current) => {
-    let steps = 0
-    while (!current.endsWith("Z")) {
-      const nextStep = moves[steps % moves.length]
-      current = nodes[current][nextStep]
-      steps++
-    }
+  startingNodes.forEach((node) => {
+    let steps = calculateStepsToEnd({
+      graph: nodes,
+      moves,
+      origin: node,
+      isComplete: (current) => current.endsWith("Z"),
+    })
     stepsToReachZ.push(steps)
   })
 
