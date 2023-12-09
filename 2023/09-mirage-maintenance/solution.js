@@ -39,7 +39,45 @@ const part1 = (input) => {
   return extrapolatedValues.reduce((total, current) => total + current, 0)
 }
 
-const part2 = (input) => {}
+const part2 = (input) => {
+  const histories = input
+    .trim()
+    .split("\n")
+    .map((row) => row.match(/-?\d+/g).map((value) => parseInt(value, 10)))
+  const extrapolatedValues = []
+
+  histories.forEach((history) => {
+    const sequences = []
+    let sequence = [...history]
+    sequences.push(sequence)
+
+    // Generate differences until we reach zero set
+    while (sequence.some((value) => value !== 0)) {
+      let differences = []
+      for (let i = 1; i < sequence.length; i++) {
+        differences.push(sequence[i] - sequence[i - 1])
+      }
+      sequences.push(differences)
+      sequence = [...differences]
+    }
+
+    // Append zero to last sequence
+    sequences[sequences.length - 1].unshift(0)
+
+    // Extrapolate first values for each sequence
+    for (let i = sequences.length - 2; i >= 0; i--) {
+      const previous = sequences[i + 1]
+      const current = sequences[i]
+      const extrapolatedValue = current[0] - previous[0]
+      current.unshift(extrapolatedValue)
+      if (i === 0) {
+        extrapolatedValues.push(extrapolatedValue)
+      }
+    }
+  })
+
+  return extrapolatedValues.reduce((total, current) => total + current, 0)
+}
 
 module.exports = {
   part1,
