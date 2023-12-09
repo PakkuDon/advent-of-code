@@ -10,9 +10,12 @@ describe("part1", () => {
   })
 })
 
-xdescribe("part2", () => {
-  test("returns something", () => {
-    const input = `puzzle input`
-    expect(part2(input)).toEqual(0)
+describe("part2", () => {
+  test("returns total source length minus encoded length", () => {
+    const input = String.raw`""
+"abc"
+"aaa\"aaa"
+"\x27"`
+    expect(part2(input)).toEqual(19)
   })
 })
