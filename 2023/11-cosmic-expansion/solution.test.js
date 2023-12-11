@@ -16,9 +16,19 @@ describe("part1", () => {
   })
 })
 
-xdescribe("part2", () => {
-  test("returns something", () => {
-    const input = `puzzle input`
-    expect(part2(input)).toEqual(0)
+describe("part2", () => {
+  test("returns sum of shortest paths between all pairs of galaxies given specified gap", () => {
+    const input = `...#......
+.......#..
+#.........
+..........
+......#...
+.#........
+.........#
+..........
+.......#..
+#...#.....`
+    expect(part2(input, 10)).toEqual(1030)
+    expect(part2(input, 100)).toEqual(8410)
   })
 })
