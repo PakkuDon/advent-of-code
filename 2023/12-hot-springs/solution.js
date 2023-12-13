@@ -1,5 +1,5 @@
 const part1 = (input) => {
-  let sum = 0
+  let count = 0
 
   input
     .trim()
@@ -9,9 +9,8 @@ const part1 = (input) => {
       const requiredSpringCount = springInput
         .split(",")
         .map((value) => parseInt(value, 10))
-      const arrangements = new Set()
 
-      // Find index of unknown elements
+      // Find position of unknown elements (?)
       const unknownIndexes = []
       for (let i = 0; i < sequence.length; i++) {
         if (sequence[i] === "?") {
@@ -19,50 +18,31 @@ const part1 = (input) => {
         }
       }
 
-      // Generate bitmasks for permutations
-      let masks = []
-      let i = 0
-      while (i.toString(2).length <= unknownIndexes.length) {
-        masks.push(i.toString(2))
-        i++
-      }
-      let maxMaskSize = Number.MIN_SAFE_INTEGER
-      masks.forEach((mask) => {
-        if (mask.length > maxMaskSize) {
-          maxMaskSize = mask.length
-        }
-      })
-      for (let i = 0; i < masks.length; i++) {
-        masks[i] = masks[i].padStart(maxMaskSize, "0")
-      }
-
-      // Find possible arrangements by applying bitmasks
-      masks.forEach((mask) => {
+      // Generate permutations
+      for (let i = 0; i < Math.pow(2, unknownIndexes.length); i++) {
+        const mask = i.toString(2).padStart(unknownIndexes.length, "0")
         let arrangement = [...sequence]
+
         mask.split("").forEach((bit, index) => {
           let char = bit === "0" ? "." : "#"
           arrangement[unknownIndexes[index]] = char
         })
-        arrangements.add(arrangement.join(""))
-      })
 
-      // Count number of permutations that match required counts
-      const matchingArrangements = [...arrangements].filter((arrangement) => {
         const counts = arrangement
+          .join("")
           .split(".")
           .filter((group) => group)
           .map((group) => group.length)
-        if (counts.length !== requiredSpringCount.length) {
-          return false
+        if (
+          counts.length === requiredSpringCount.length &&
+          counts.every((count, index) => count === requiredSpringCount[index])
+        ) {
+          count++
         }
-        return counts.every(
-          (count, index) => count === requiredSpringCount[index]
-        )
-      })
-      sum += matchingArrangements.length
+      }
     })
 
-  return sum
+  return count
 }
 
 const part2 = (input) => {}
