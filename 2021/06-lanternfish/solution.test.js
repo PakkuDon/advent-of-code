@@ -7,9 +7,10 @@ describe("part1", () => {
   })
 })
 
-xdescribe("part2", () => {
-  test("returns something", () => {
-    const input = `puzzle input`
-    expect(part2(input)).toEqual(0)
+describe("part2", () => {
+  test("returns number of fish after a lot of days", () => {
+    const input = `3,4,3,1,2`
+    expect(part2(input, 18)).toEqual(26)
+    expect(part2(input, 256)).toEqual(26984457539)
   })
 })
