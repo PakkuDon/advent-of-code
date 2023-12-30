@@ -25,7 +25,10 @@ const part1 = (input, iterations) => {
   return sequence
 }
 
-const part2 = (input) => {}
+const part2 = (input, iterations) => {
+  console.log("Note: 2015 Day 10 Part 2 reuses same algorithm from Part 1")
+  return part1(input, iterations)
+}
 
 module.exports = {
   part1,
