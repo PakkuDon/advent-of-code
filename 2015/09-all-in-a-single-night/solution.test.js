@@ -9,9 +9,11 @@ Dublin to Belfast = 141`
   })
 })
 
-xdescribe("part2", () => {
-  test("returns something", () => {
-    const input = `puzzle input`
-    expect(part2(input)).toEqual(0)
+describe("part2", () => {
+  test("returns distance for longest possible route", () => {
+    const input = `London to Dublin = 464
+London to Belfast = 518
+Dublin to Belfast = 141`
+    expect(part2(input)).toEqual(982)
   })
 })

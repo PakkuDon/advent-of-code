@@ -1,3 +1,21 @@
+const parseInput = (input) => {
+  const graph = {}
+  input.split("\n").forEach((link) => {
+    const [_, origin, destination, cost] = link.match(/(\w+) to (\w+) = (\d+)/)
+    if (!graph[origin]) {
+      graph[origin] = { neighbours: {} }
+    }
+    if (!graph[destination]) {
+      graph[destination] = { neighbours: {} }
+    }
+    graph[origin].neighbours[destination] = parseInt(cost, 10)
+    graph[destination].neighbours[origin] = parseInt(cost, 10)
+  })
+
+  return graph
+}
+
+// From https://rosettacode.org/wiki/Permutations#JavaScript
 const generatePermutations = (list) => {
   if (list.length < 2) {
     return [list]
@@ -17,22 +35,9 @@ const generatePermutations = (list) => {
 }
 
 const part1 = (input) => {
-  // Parse nodes
-  const graph = {}
-  input.split("\n").forEach((link) => {
-    const [_, origin, destination, cost] = link.match(/(\w+) to (\w+) = (\d+)/)
-    if (!graph[origin]) {
-      graph[origin] = { neighbours: {} }
-    }
-    if (!graph[destination]) {
-      graph[destination] = { neighbours: {} }
-    }
-    graph[origin].neighbours[destination] = parseInt(cost, 10)
-    graph[destination].neighbours[origin] = parseInt(cost, 10)
-  })
-
-  // Find distance for shortest possible route
+  const graph = parseInput(input)
   const possibleRoutes = generatePermutations(Object.keys(graph))
+
   let shortestDistance = Number.MAX_SAFE_INTEGER
   possibleRoutes.forEach((route) => {
     let current = route[0]
@@ -50,7 +55,26 @@ const part1 = (input) => {
   return shortestDistance
 }
 
-const part2 = (input) => {}
+const part2 = (input) => {
+  const graph = parseInput(input)
+  const possibleRoutes = generatePermutations(Object.keys(graph))
+
+  let longestDistance = Number.MIN_SAFE_INTEGER
+  possibleRoutes.forEach((route) => {
+    let current = route[0]
+    let cost = 0
+    for (let i = 1; i < route.length; i++) {
+      cost += graph[current].neighbours[route[i]]
+      current = route[i]
+    }
+
+    if (cost > longestDistance) {
+      longestDistance = cost
+    }
+  })
+
+  return longestDistance
+}
 
 module.exports = {
   part1,
