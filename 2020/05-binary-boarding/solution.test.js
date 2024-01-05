@@ -11,8 +11,5 @@ BBFFBBFRLL`
 })
 
 xdescribe("part2", () => {
-  test("returns something", () => {
-    const input = `puzzle input`
-    expect(part2(input)).toEqual(0)
-  })
+  xtest("no test data provided", () => {})
 })

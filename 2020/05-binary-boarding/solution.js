@@ -26,7 +26,26 @@ const part1 = (input) => {
   return Math.max(...seatIds)
 }
 
-const part2 = (input) => {}
+const part2 = (input) => {
+  const boardingPasses = input.trim().split("\n")
+  const seatIds = boardingPasses.map((pass) => {
+    const rowInput = pass.substring(0, 7)
+    const seatInput = pass.substring(7)
+
+    const row = processBinaryPartition(rowInput, 0, 127)
+    const column = processBinaryPartition(seatInput, 0, 7)
+
+    return row * 8 + column
+  })
+  seatIds.sort((a, b) => a - b)
+
+  // Find missing seat ID
+  for (let i = 1; i < seatIds.length; i++) {
+    if (seatIds[i] - seatIds[i - 1] > 1) {
+      return seatIds[i] - 1
+    }
+  }
+}
 
 module.exports = {
   part1,
