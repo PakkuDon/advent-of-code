@@ -42,9 +42,28 @@ describe("part1", () => {
   })
 })
 
-xdescribe("part2", () => {
-  test("returns something", () => {
-    const input = `puzzle input`
-    expect(part2(input)).toEqual(0)
+describe("part2", () => {
+  test("returns sum of all numbers excluding objects containing value 'red'", () => {
+    const testCases = [
+      {
+        input: "[1,2,3]",
+        expected: 6,
+      },
+      {
+        input: `[1,{"c":"red","b":2},3]`,
+        expected: 4,
+      },
+      {
+        input: `{"d":"red","e":[1,2,3,4],"f":5}`,
+        expected: 0,
+      },
+      {
+        input: `[1,"red",5]`,
+        expected: 6,
+      },
+    ]
+    testCases.forEach(({ input, expected }) => {
+      expect(part2(input)).toEqual(expected)
+    })
   })
 })
