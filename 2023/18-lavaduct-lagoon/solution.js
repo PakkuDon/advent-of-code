@@ -23,7 +23,7 @@ const calculateAreaInPath = (instructions, startingPosition) => {
     perimeter += instruction.meters
     visited.push({ x: digger.x, y: digger.y })
   })
-  
+
   // Calculate area of polygon using shoelace formula
   // https://rosettacode.org/wiki/Shoelace_formula_for_polygonal_area
   let area = 0

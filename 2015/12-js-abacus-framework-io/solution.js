@@ -4,15 +4,18 @@ const part1 = (input) => {
     .reduce((total, current) => total + current, 0)
 }
 
-const calculateSumOfObject = object => {
+const calculateSumOfObject = (object) => {
   const values = Object.values(object)
 
-  if (object.constructor === Object && values.some(value => value === "red")) {
+  if (
+    object.constructor === Object &&
+    values.some((value) => value === "red")
+  ) {
     return 0
   }
 
   let sum = 0
-  values.forEach(value => {
+  values.forEach((value) => {
     if (Array.isArray(value)) {
       sum += calculateSumOfObject(value)
     } else if (value.constructor === Object) {
