@@ -19,7 +19,23 @@ const part1 = (input) => {
   return reports.filter(isSafeReport).length
 }
 
-const part2 = (input) => {}
+const part2 = (input) => {
+  const reports = input.split("\n").map(value => value.split(/\s/).map(cell => parseInt(cell, 10)))
+
+  const safeReports = reports.filter(report => {
+    if (isSafeReport(report)) {
+      return true
+    }
+
+    for (let i = 0; i < report.length; i++) {
+      if (isSafeReport([...report.slice(0, i), ...report.slice(i + 1)])) {
+        return true
+      }
+    }
+    return false
+  })
+  return safeReports.length
+}
 
 module.exports = {
   part1,
