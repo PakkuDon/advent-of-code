@@ -26,9 +26,32 @@ describe("part1", () => {
   })
 })
 
-xdescribe("part2", () => {
-  test("returns something", () => {
-    const input = `puzzle input`
-    expect(part2(input)).toEqual(0)
+describe("part2", () => {
+  test("returns sum of all digits that match digit halfway around", () => {
+    const testCases = [
+      {
+        input: "1212",
+        expected: 6,
+      },
+      {
+        input: "1221",
+        expected: 0,
+      },
+      {
+        input: "123425",
+        expected: 4,
+      },
+      {
+        input: "123123",
+        expected: 12,
+      },
+      {
+        input: "12131415",
+        expected: 4,
+      },
+    ]
+    testCases.forEach(({ input, expected }) => {
+      expect(part2(input)).toEqual(expected)
+    })
   })
 })
