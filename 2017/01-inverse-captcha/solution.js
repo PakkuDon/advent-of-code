@@ -1,4 +1,4 @@
-const inverseCaptcha = (input) => {
+const part1 = (input) => {
   const digits = input.split("").map((d) => parseInt(d))
   let sum = 0
 
@@ -12,4 +12,9 @@ const inverseCaptcha = (input) => {
   return sum
 }
 
-module.exports = inverseCaptcha
+const part2 = (input) => {}
+
+module.exports = {
+  part1,
+  part2,
+}
