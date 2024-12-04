@@ -21,9 +21,23 @@ b`
   })
 })
 
-xdescribe("part2", () => {
-  test("returns something", () => {
-    const input = `puzzle input`
-    expect(part2(input)).toEqual(0)
+describe("part2", () => {
+  test("returns sum of counts where everyone said yes", () => {
+    const input = `abc
+
+a
+b
+c
+
+ab
+ac
+
+a
+a
+a
+a
+
+b`
+    expect(part2(input)).toEqual(6)
   })
 })
