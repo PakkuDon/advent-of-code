@@ -1,29 +1,25 @@
 const isValidPageUpdate = (pageUpdate, pageOrderingRules) => {
+  const pagesPrecedingPageNo = {}
+  pageOrderingRules.forEach((rule) => {
+    if (!pagesPrecedingPageNo[rule[0]]) {
+      pagesPrecedingPageNo[rule[0]] = []
+    }
+    pagesPrecedingPageNo[rule[0]].push(rule[1])
+  })
+
   for (let i = 0; i < pageUpdate.length; i++) {
     const pageNo = pageUpdate[i]
 
-    // Check that current page is pageUpdate is after all pages specified in rules
-    const afterPage = pageOrderingRules
-      .filter((rule) => pageUpdate.includes(rule[0]) && rule[1] === pageNo)
-      .map((rule) => rule[0])
-    if (
-      !afterPage.every((otherPage) => {
-        return pageUpdate.indexOf(pageNo) > pageUpdate.indexOf(otherPage)
-      })
-    ) {
-      return false
-    }
-
-    // Check that current page is pageUpdate is before all pages specified in rules
-    const beforePage = pageOrderingRules
-      .filter((rule) => pageUpdate.includes(rule[1]) && rule[0] === pageNo)
-      .map((rule) => rule[1])
-    if (
-      !beforePage.every((otherPage) => {
-        return pageUpdate.indexOf(pageNo) < pageUpdate.indexOf(otherPage)
-      })
-    ) {
-      return false
+    // Check that current page is before all pages specified in rules
+    if (pagesPrecedingPageNo[pageNo]) {
+      if (
+        pagesPrecedingPageNo[pageNo].some(
+          (otherPage) =>
+            pageUpdate.includes(otherPage) && i > pageUpdate.indexOf(otherPage)
+        )
+      ) {
+        return false
+      }
     }
   }
   return true
