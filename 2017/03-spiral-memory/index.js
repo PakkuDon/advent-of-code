@@ -1,6 +1,10 @@
 const fs = require("fs")
-const SpiralMemory = require("./spiral-memory")
+const path = require("path")
+const { part1, part2 } = require("./solution")
 
-const puzzleInput = fs.readFileSync("input.txt", "utf8")
-const parsedInput = parseInt(puzzleInput.trim())
-console.log(SpiralMemory.calculateSteps(parsedInput))
+const puzzleInput = fs
+  .readFileSync(path.join(__dirname, "input.txt"), "utf8")
+  .trim()
+
+console.log(`Part 1: ${part1(puzzleInput)}`)
+console.log(`Part 2: ${part2(puzzleInput)}`)

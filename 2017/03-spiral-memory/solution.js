@@ -1,4 +1,9 @@
-const calculateSteps = (startPoint) => {
+const getNearestSquare = (number) => {
+  return Math.ceil(Math.sqrt(number))
+}
+
+const part1 = (input) => {
+  const startPoint = parseInt(input, 10)
   const ring = getNearestSquare(startPoint)
 
   if (ring - 1 === 0) {
@@ -9,10 +14,9 @@ const calculateSteps = (startPoint) => {
   return center - 1 + Math.abs(center - (startPoint % ring))
 }
 
-const getNearestSquare = (number) => {
-  return Math.ceil(Math.sqrt(number))
-}
+const part2 = (input) => {}
 
 module.exports = {
-  calculateSteps,
+  part1,
+  part2,
 }
