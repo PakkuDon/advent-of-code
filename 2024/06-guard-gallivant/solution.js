@@ -1,22 +1,6 @@
-const part1 = (input) => {
-  const grid = input.trim().split("\n")
-  let guard
-  // Find guard position
-  for (let y = 0; y < grid.length; y++) {
-    if (guard) {
-      break
-    }
-
-    for (let x = 0; x < grid[y].length; x++) {
-      if (grid[y][x] === "^") {
-        guard = { x, y, direction: "N" }
-        break
-      }
-    }
-  }
-
-  // Plot guard route
-  let distinctSteps = new Set()
+const getGuardRoute = (grid, guard) => {
+  const steps = []
+  const visitCounts = {}
 
   while (
     guard.x >= 0 &&
@@ -24,7 +8,16 @@ const part1 = (input) => {
     guard.y >= 0 &&
     guard.y < grid.length
   ) {
-    distinctSteps.add(`${guard.x},${guard.y}`)
+    if (!visitCounts[`${guard.x},${guard.y}`]) {
+      visitCounts[`${guard.x},${guard.y}`] = 0
+    }
+    steps.push(`${guard.x},${guard.y}`)
+    visitCounts[`${guard.x},${guard.y}`]++
+
+    // Hack to detect cycle. Guard never visits same tile more than 4 times in actual input
+    if (visitCounts[`${guard.x},${guard.y}`] > 4) {
+      return []
+    }
 
     if (guard.direction === "N") {
       // Default to empty array to handle case where guard steps out of bounds
@@ -54,10 +47,65 @@ const part1 = (input) => {
     }
   }
 
-  return distinctSteps.size
+  return steps
 }
 
-const part2 = (input) => {}
+const part1 = (input) => {
+  const grid = input.trim().split("\n")
+  let guard
+  // Find guard position
+  for (let y = 0; y < grid.length; y++) {
+    if (guard) {
+      break
+    }
+
+    for (let x = 0; x < grid[y].length; x++) {
+      if (grid[y][x] === "^") {
+        guard = { x, y, direction: "N" }
+        break
+      }
+    }
+  }
+
+  // Plot guard route
+  const route = getGuardRoute(grid, guard)
+  return new Set(route).size
+}
+
+const part2 = (input) => {
+  const grid = input.trim().split("\n").map(row => row.split(""))
+  let guard
+  // Find guard position
+  for (let y = 0; y < grid.length; y++) {
+    if (guard) {
+      break
+    }
+
+    for (let x = 0; x < grid[y].length; x++) {
+      if (grid[y][x] === "^") {
+        guard = { x, y, direction: "N" }
+        break
+      }
+    }
+  }
+
+  const initialRoute = getGuardRoute(grid, {...guard})
+  const steps = new Set(initialRoute)
+
+  let potentialObstructions = 0
+  steps.forEach(step => {
+    const [x, y] = step.split(",").map(value => parseInt(value, 10))
+    const newGrid = input.trim().split("\n").map(row => row.split(""))
+    newGrid[y][x] = "#"
+
+    const route = getGuardRoute(newGrid, {...guard})
+    if (route.length === 0) {
+      potentialObstructions++
+    }
+  })
+
+  return potentialObstructions
+}
 
 module.exports = {
   part1,
