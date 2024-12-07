@@ -73,7 +73,10 @@ const part1 = (input) => {
 }
 
 const part2 = (input) => {
-  const grid = input.trim().split("\n").map(row => row.split(""))
+  const grid = input
+    .trim()
+    .split("\n")
+    .map((row) => row.split(""))
   let guard
   // Find guard position
   for (let y = 0; y < grid.length; y++) {
@@ -89,16 +92,19 @@ const part2 = (input) => {
     }
   }
 
-  const initialRoute = getGuardRoute(grid, {...guard})
+  const initialRoute = getGuardRoute(grid, { ...guard })
   const steps = new Set(initialRoute)
 
   let potentialObstructions = 0
-  steps.forEach(step => {
-    const [x, y] = step.split(",").map(value => parseInt(value, 10))
-    const newGrid = input.trim().split("\n").map(row => row.split(""))
+  steps.forEach((step) => {
+    const [x, y] = step.split(",").map((value) => parseInt(value, 10))
+    const newGrid = input
+      .trim()
+      .split("\n")
+      .map((row) => row.split(""))
     newGrid[y][x] = "#"
 
-    const route = getGuardRoute(newGrid, {...guard})
+    const route = getGuardRoute(newGrid, { ...guard })
     if (route.length === 0) {
       potentialObstructions++
     }
