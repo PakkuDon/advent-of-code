@@ -18,7 +18,33 @@ const part1 = (input, width, height) => {
   return numberOf1s * numberOf2s
 }
 
-const part2 = (input) => {}
+const part2 = (input, width, height) => {
+  // Partition input into layers
+  const layers = []
+  const layerSize = width * height
+  for (let i = 0; i < input.length; i += layerSize) {
+    layers.push(input.slice(i, i + layerSize))
+  }
+
+  // Find pixels that make up final image
+  const finalLayers = []
+  for (let i = 0; i < layers[0].length; i++) {
+    // Loop until non-transparent pixel found
+    for (let j = 0; j < layers.length; j++) {
+      if (layers[j][i] !== "2") {
+        finalLayers.push(layers[j][i])
+        break
+      }
+    }
+  }
+
+  // Construct final message from layers
+  let result = ""
+  for (let i = 0; i < finalLayers.length; i += width) {
+    result += finalLayers.slice(i, i + width).join("") + "\n"
+  }
+  return result.trim()
+}
 
 module.exports = {
   part1,

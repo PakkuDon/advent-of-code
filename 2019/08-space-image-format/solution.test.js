@@ -7,9 +7,10 @@ describe("part1", () => {
   })
 })
 
-xdescribe("part2", () => {
-  test("returns something", () => {
-    const input = `puzzle input`
-    expect(part2(input)).toEqual(0)
+describe("part2", () => {
+  test("returns final image after stacking layers", () => {
+    const input = `0222112222120000`
+    expect(part2(input, 2, 2)).toEqual(`01
+10`)
   })
 })

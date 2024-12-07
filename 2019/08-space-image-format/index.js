@@ -7,4 +7,4 @@ const puzzleInput = fs
   .trim()
 
 console.log(`Part 1: ${part1(puzzleInput, 25, 6)}`)
-console.log(`Part 2: ${part2(puzzleInput)}`)
+console.log(`Part 2: \n${part2(puzzleInput, 25, 6)}`)
