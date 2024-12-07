@@ -31,7 +31,40 @@ const part1 = (input) => {
   return count
 }
 
-const part2 = (input) => {}
+const part2 = (input) => {
+  const [min, max] = input.split("-").map((value) => Number(value))
+
+  // Count number of valid passwords in input range
+  let count = 0
+  for (let i = min; i <= max; i++) {
+    let str = i.toString()
+    // Reject value if not a six-digit string
+    if (str.length !== 6) {
+      continue
+    }
+
+    // Reject value if it does not have one set of exactly two adjacent digits
+    if (
+      !str.split("").some((digit) => {
+        return (
+          str.match(new RegExp(`${digit}{2}`)) &&
+          !str.match(new RegExp(`${digit}{3}`))
+        )
+      })
+    ) {
+      continue
+    }
+
+    // Reject value if not sorted in ascending order
+    if (str !== str.split("").sort().join("")) {
+      continue
+    }
+
+    count++
+  }
+
+  return count
+}
 
 module.exports = {
   part1,

@@ -8,9 +8,10 @@ describe("part1", () => {
   })
 })
 
-xdescribe("part2", () => {
-  test("returns something", () => {
-    const input = `puzzle input`
-    expect(part2(input)).toEqual(0)
+describe("part2", () => {
+  test("returns number of valid passwords in input range", () => {
+    expect(part2("112233-112233")).toEqual(1)
+    expect(part2("123444-123444")).toEqual(0)
+    expect(part2("111122-111122")).toEqual(1)
   })
 })
