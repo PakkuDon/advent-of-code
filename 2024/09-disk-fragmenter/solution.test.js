@@ -7,9 +7,9 @@ describe("part1", () => {
   })
 })
 
-xdescribe("part2", () => {
-  test("returns something", () => {
-    const input = `puzzle input`
-    expect(part2(input)).toEqual(0)
+describe("part2", () => {
+  test("returns filesystem checksum using new algorithm", () => {
+    const input = `2333133121414131402`
+    expect(part2(input)).toEqual(2858)
   })
 })
