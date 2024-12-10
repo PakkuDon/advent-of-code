@@ -1,6 +1,6 @@
 const getGuardRoute = (grid, guard) => {
   const steps = []
-  const visitCounts = {}
+  const visitedTiles = new Set()
 
   while (
     guard.x >= 0 &&
@@ -8,16 +8,11 @@ const getGuardRoute = (grid, guard) => {
     guard.y >= 0 &&
     guard.y < grid.length
   ) {
-    if (!visitCounts[`${guard.x},${guard.y}`]) {
-      visitCounts[`${guard.x},${guard.y}`] = 0
+    if (visitedTiles.has(`${guard.x},${guard.y},${guard.direction}`)) {
+      return { route: steps, isCycle: true }
     }
     steps.push(`${guard.x},${guard.y}`)
-    visitCounts[`${guard.x},${guard.y}`]++
-
-    // Hack to detect cycle. Guard never visits same tile more than 4 times in actual input
-    if (visitCounts[`${guard.x},${guard.y}`] > 4) {
-      return []
-    }
+    visitedTiles.add(`${guard.x},${guard.y},${guard.direction}`)
 
     if (guard.direction === "N") {
       // Default to empty array to handle case where guard steps out of bounds
@@ -47,7 +42,7 @@ const getGuardRoute = (grid, guard) => {
     }
   }
 
-  return steps
+  return { route: steps, isCycle: false }
 }
 
 const part1 = (input) => {
@@ -68,7 +63,7 @@ const part1 = (input) => {
   }
 
   // Plot guard route
-  const route = getGuardRoute(grid, guard)
+  const { route } = getGuardRoute(grid, guard)
   return new Set(route).size
 }
 
@@ -92,8 +87,8 @@ const part2 = (input) => {
     }
   }
 
-  const initialRoute = getGuardRoute(grid, { ...guard })
-  const steps = new Set(initialRoute)
+  const { route } = getGuardRoute(grid, { ...guard })
+  const steps = new Set(route)
 
   let potentialObstructions = 0
   steps.forEach((step) => {
@@ -104,8 +99,8 @@ const part2 = (input) => {
       .map((row) => row.split(""))
     newGrid[y][x] = "#"
 
-    const route = getGuardRoute(newGrid, { ...guard })
-    if (route.length === 0) {
+    const { isCycle } = getGuardRoute(newGrid, { ...guard })
+    if (isCycle) {
       potentialObstructions++
     }
   })
