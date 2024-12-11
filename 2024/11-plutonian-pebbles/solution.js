@@ -1,16 +1,23 @@
-const part1 = (input) => {
-  let stones = input
-    .trim()
-    .split(/\s/g)
-    .map((value) => Number(value))
+const countStonesAfterBlinks = (initialState, blinks) => {
+  const amountsPerStone = new Map()
 
-  for (let i = 0; i < 25; i++) {
-    const newStones = []
-    for (let j = 0; j < stones.length; j++) {
-      const stone = stones[j]
+  initialState.forEach((stone) => {
+    if (!amountsPerStone[stone]) {
+      amountsPerStone[stone] = 0
+    }
+    amountsPerStone[stone]++
+  })
+
+  for (let i = 0; i < blinks; i++) {
+    for (const [key, amount] of Object.entries(amountsPerStone)) {
+      const stone = Number(key)
+      amountsPerStone[stone] -= amount
 
       if (stone === 0) {
-        newStones.push(1)
+        if (!amountsPerStone[1]) {
+          amountsPerStone[1] = 0
+        }
+        amountsPerStone[1] += amount
       } else if (stone.toString().length % 2 === 0) {
         const left = Number(
           stone.toString().slice(0, stone.toString().length / 2)
@@ -18,16 +25,36 @@ const part1 = (input) => {
         const right = Number(
           stone.toString().slice(stone.toString().length / 2)
         )
-        newStones.push(left)
-        newStones.push(right)
+        if (!amountsPerStone[left]) {
+          amountsPerStone[left] = 0
+        }
+        if (!amountsPerStone[right]) {
+          amountsPerStone[right] = 0
+        }
+        amountsPerStone[left] += amount
+        amountsPerStone[right] += amount
       } else {
-        newStones.push(stone * 2024)
+        if (!amountsPerStone[stone * 2024]) {
+          amountsPerStone[stone * 2024] = 0
+        }
+        amountsPerStone[stone * 2024] += amount
       }
     }
-    stones = newStones
   }
 
-  return stones.length
+  return Object.values(amountsPerStone).reduce(
+    (total, current) => total + current,
+    0
+  )
+}
+
+const part1 = (input) => {
+  const stones = input
+    .trim()
+    .split(/\s/g)
+    .map((value) => Number(value))
+
+  return countStonesAfterBlinks(stones, 25)
 }
 
 const part2 = (input) => {}
