@@ -2,10 +2,7 @@ const countStonesAfterBlinks = (initialState, blinks) => {
   const amountsPerStone = {}
 
   initialState.forEach((stone) => {
-    if (!amountsPerStone[stone]) {
-      amountsPerStone[stone] = 0
-    }
-    amountsPerStone[stone]++
+    amountsPerStone[stone] = (amountsPerStone[stone] || 0) + 1
   })
 
   for (let i = 0; i < blinks; i++) {
@@ -14,10 +11,7 @@ const countStonesAfterBlinks = (initialState, blinks) => {
       amountsPerStone[stone] -= amount
 
       if (stone === 0) {
-        if (!amountsPerStone[1]) {
-          amountsPerStone[1] = 0
-        }
-        amountsPerStone[1] += amount
+        amountsPerStone[1] = (amountsPerStone[1] || 0) + amount
       } else if (stone.toString().length % 2 === 0) {
         const left = Number(
           stone.toString().slice(0, stone.toString().length / 2)
@@ -25,19 +19,12 @@ const countStonesAfterBlinks = (initialState, blinks) => {
         const right = Number(
           stone.toString().slice(stone.toString().length / 2)
         )
-        if (!amountsPerStone[left]) {
-          amountsPerStone[left] = 0
-        }
-        if (!amountsPerStone[right]) {
-          amountsPerStone[right] = 0
-        }
-        amountsPerStone[left] += amount
-        amountsPerStone[right] += amount
+
+        amountsPerStone[left] = (amountsPerStone[left] || 0) + amount
+        amountsPerStone[right] = (amountsPerStone[right] || 0) + amount
       } else {
-        if (!amountsPerStone[stone * 2024]) {
-          amountsPerStone[stone * 2024] = 0
-        }
-        amountsPerStone[stone * 2024] += amount
+        amountsPerStone[stone * 2024] =
+          (amountsPerStone[stone * 2024] || 0) + amount
       }
     }
   }
