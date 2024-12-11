@@ -1,5 +1,5 @@
 const countStonesAfterBlinks = (initialState, blinks) => {
-  const amountsPerStone = new Map()
+  const amountsPerStone = {}
 
   initialState.forEach((stone) => {
     if (!amountsPerStone[stone]) {
@@ -57,7 +57,14 @@ const part1 = (input) => {
   return countStonesAfterBlinks(stones, 25)
 }
 
-const part2 = (input) => {}
+const part2 = (input) => {
+  const stones = input
+    .trim()
+    .split(/\s/g)
+    .map((value) => Number(value))
+
+  return countStonesAfterBlinks(stones, 75)
+}
 
 module.exports = {
   part1,
