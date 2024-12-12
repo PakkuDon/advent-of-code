@@ -82,7 +82,94 @@ const part1 = (input) => {
   )
 }
 
-const part2 = (input) => {}
+const part2 = (input) => {
+  const grid = input.trim().split("\n")
+  const regions = []
+  const visited = {}
+
+  // Calculate area and perimeter for each plant type
+  for (let y = 0; y < grid.length; y++) {
+    for (let x = 0; x < grid[y].length; x++) {
+      // If tile already visited it has already been counted in a region
+      if (visited[`${x},${y}`]) {
+        continue
+      }
+
+      const plant = grid[y][x]
+      const tiles = []
+      const stack = []
+      stack.push({ x, y })
+      let corners = 0
+
+      // Flood fill until we determine which tiles are in region
+      while (stack.length > 0) {
+        const current = stack.pop()
+        // Skip nodes that we have already enqueued neighbouring tiles for
+        if (visited[`${current.x},${current.y}`]) {
+          continue
+        }
+
+        visited[`${current.x},${current.y}`] = true
+        tiles.push({ tileX: current.x, tileY: current.y })
+        stack.push(current)
+
+        // Find corners for current tile
+        const deltas = [
+          { dx: -1, dy: -1 },
+          { dx: -1, dy: 1 },
+          { dx: 1, dy: -1 },
+          { dx: 1, dy: 1 },
+        ]
+        deltas.forEach(({ dx, dy }) => {
+          neighbours = [
+            (grid[current.y] || [])[current.x],
+            (grid[current.y] || [])[current.x + dx],
+            (grid[current.y + dy] || [])[current.x],
+            (grid[current.y + dy] || [])[current.x + dx],
+          ]
+
+          if (
+            (neighbours[0] != neighbours[1] &&
+              neighbours[0] != neighbours[2]) ||
+            (neighbours[0] == neighbours[1] &&
+              neighbours[0] == neighbours[2] &&
+              neighbours[0] != neighbours[3])
+          ) {
+            corners++
+          }
+        })
+
+        // Add neighbours if same plant type
+        if (current.y > 0 && grid[current.y - 1][current.x] === plant) {
+          stack.push({ x: current.x, y: current.y - 1 })
+        }
+        if (
+          current.y < grid.length - 1 &&
+          grid[current.y + 1][current.x] === plant
+        ) {
+          stack.push({ x: current.x, y: current.y + 1 })
+        }
+        if (current.x > 0 && grid[current.y][current.x - 1] === plant) {
+          stack.push({ x: current.x - 1, y: current.y })
+        }
+        if (
+          current.x < grid[0].length - 1 &&
+          grid[current.y][current.x + 1] === plant
+        ) {
+          stack.push({ x: current.x + 1, y: current.y })
+        }
+      }
+
+      regions.push({ area: tiles.length, corners })
+    }
+  }
+
+  // Return sum of fence costs
+  return regions.reduce(
+    (total, region) => total + region.area * region.corners,
+    0
+  )
+}
 
 module.exports = {
   part1,

@@ -18,7 +18,16 @@ MMMISSJEEE`
 
 describe("part2", () => {
   test("returns total price of fencing with updated algorithm", () => {
-    const input = `puzzle input`
-    expect(part2(input)).toEqual(0)
+    const input = `RRRRIICCFF
+RRRRIICCCF
+VVRRRCCFFF
+VVRCCCJFFF
+VVVVCJJCFE
+VVIVCCJJEE
+VVIIICJJEE
+MIIIIIJJEE
+MIIISIJEEE
+MMMISSJEEE`
+    expect(part2(input)).toEqual(1206)
   })
 })
