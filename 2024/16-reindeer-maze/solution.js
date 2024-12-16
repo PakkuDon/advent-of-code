@@ -1,25 +1,13 @@
-const part1 = (input) => {
-  // Parse maze
-  const grid = input
-    .trim()
-    .split("\n")
-    .map((row) => row.split(""))
-
-  // Find start and end locations
-  let start, end
-  const graph = {}
+const getLowestScore = (grid, start, end) => {
+  const costs = {}
 
   // Initialise travel costs for all nodes in maze
   for (let y = 0; y < grid.length; y++) {
     for (let x = 0; x < grid[y].length; x++) {
       if (grid[y][x] === "S") {
-        start = { x, y }
-        graph[`${x},${y}`] = 0
-      } else if (grid[y][x] === "E") {
-        end = { x, y }
-        graph[`${x},${y}`] = Number.MAX_SAFE_INTEGER
+        costs[`${x},${y}`] = 0
       } else {
-        graph[`${x},${y}`] = Number.MAX_SAFE_INTEGER
+        costs[`${x},${y}`] = Number.MAX_SAFE_INTEGER
       }
     }
   }
@@ -32,14 +20,14 @@ const part1 = (input) => {
   while (stack.length > 0) {
     // Pick next lowest-cost node
     stack.sort((a, b) =>
-      graph[`${a.x},${a.y}`] < graph[`${b.x},${b.y}`] ? -1 : 1
+      costs[`${a.x},${a.y}`] < costs[`${b.x},${b.y}`] ? -1 : 1
     )
     const current = stack.shift()
     if (visited[`${current.x},${current.y}`]) {
       continue
     }
     visited[`${current.x},${current.y}`] = 1
-    const currentCost = graph[`${current.x},${current.y}`]
+    const currentCost = costs[`${current.x},${current.y}`]
 
     // Add potential neighbours to stack to explore
     // Up
@@ -50,8 +38,8 @@ const part1 = (input) => {
         direction: "N",
       })
       const cost = currentCost + (current.direction === "N" ? 1 : 1001)
-      if (cost < graph[`${current.x},${current.y - 1}`]) {
-        graph[`${current.x},${current.y - 1}`] = cost
+      if (cost < costs[`${current.x},${current.y - 1}`]) {
+        costs[`${current.x},${current.y - 1}`] = cost
       }
     }
     // Right
@@ -62,8 +50,8 @@ const part1 = (input) => {
         direction: "E",
       })
       const cost = currentCost + (current.direction === "E" ? 1 : 1001)
-      if (cost < graph[`${current.x + 1},${current.y}`]) {
-        graph[`${current.x + 1},${current.y}`] = cost
+      if (cost < costs[`${current.x + 1},${current.y}`]) {
+        costs[`${current.x + 1},${current.y}`] = cost
       }
     }
     // Down
@@ -74,8 +62,8 @@ const part1 = (input) => {
         direction: "S",
       })
       const cost = currentCost + (current.direction === "S" ? 1 : 1001)
-      if (cost < graph[`${current.x},${current.y + 1}`]) {
-        graph[`${current.x},${current.y + 1}`] = cost
+      if (cost < costs[`${current.x},${current.y + 1}`]) {
+        costs[`${current.x},${current.y + 1}`] = cost
       }
     }
     // Left
@@ -86,14 +74,36 @@ const part1 = (input) => {
         direction: "W",
       })
       const cost = currentCost + (current.direction === "W" ? 1 : 1001)
-      if (cost < graph[`${current.x - 1},${current.y}`]) {
-        graph[`${current.x - 1},${current.y}`] = cost
+      if (cost < costs[`${current.x - 1},${current.y}`]) {
+        costs[`${current.x - 1},${current.y}`] = cost
       }
     }
   }
 
   // Return score for end
-  return graph[`${end.x},${end.y}`]
+  return costs[`${end.x},${end.y}`]
+}
+
+const part1 = (input) => {
+  // Parse maze
+  const grid = input
+    .trim()
+    .split("\n")
+    .map((row) => row.split(""))
+
+  // Find start and end locations
+  let start, end
+  for (let y = 0; y < grid.length; y++) {
+    for (let x = 0; x < grid[y].length; x++) {
+      if (grid[y][x] === "S") {
+        start = { x, y }
+      } else if (grid[y][x] === "E") {
+        end = { x, y }
+      }
+    }
+  }
+
+  return getLowestScore(grid, start, end)
 }
 
 const part2 = (input) => {}
