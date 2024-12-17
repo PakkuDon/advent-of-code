@@ -1,14 +1,17 @@
-const part1 = (input) => {
-  // Parse input
-  const [registerInput, programInput] = input.trim().split("\n\n")
-  const registers = registerInput
-    .split("\n")
-    .flatMap((row) => row.match(/\d+/g).map((value) => Number(value)))
-  const instructions = programInput
-    .split(": ")[1]
-    .split(",")
-    .map((value) => Number(value))
+const getComboOperand = (operand, registers) => {
+  switch (operand) {
+    case 4:
+      return registers[0]
+    case 5:
+      return registers[1]
+    case 6:
+      return registers[2]
+    default:
+      return operand
+  }
+}
 
+const getProgramOutput = (registers, instructions) => {
   // Process instructions
   let pointer = 0
   let output = []
@@ -20,15 +23,9 @@ const part1 = (input) => {
     // Determine what instruction to execute
     // opcode 1 - adv
     if (opcode === 0) {
-      let comboOperand = operand
-      if (operand === 4) {
-        comboOperand = registers[0]
-      } else if (operand === 5) {
-        comboOperand = registers[1]
-      } else if (operand === 6) {
-        comboOperand = registers[2]
-      }
-      registers[0] = Math.floor(registers[0] / Math.pow(2, comboOperand))
+      registers[0] = Math.floor(
+        registers[0] / Math.pow(2, getComboOperand(operand, registers))
+      )
     }
     // opcode 1 - bxl
     else if (opcode === 1) {
@@ -36,15 +33,7 @@ const part1 = (input) => {
     }
     // opcode 2 - bst
     else if (opcode === 2) {
-      let comboOperand = operand
-      if (operand === 4) {
-        comboOperand = registers[0]
-      } else if (operand === 5) {
-        comboOperand = registers[1]
-      } else if (operand === 6) {
-        comboOperand = registers[2]
-      }
-      registers[1] = comboOperand % 8
+      registers[1] = getComboOperand(operand, registers) % 8
     }
     // opcode 3 - jnz
     else if (opcode === 3) {
@@ -59,40 +48,19 @@ const part1 = (input) => {
     }
     // opcode 5 - out
     else if (opcode === 5) {
-      let comboOperand = operand
-      if (operand === 4) {
-        comboOperand = registers[0]
-      } else if (operand === 5) {
-        comboOperand = registers[1]
-      } else if (operand === 6) {
-        comboOperand = registers[2]
-      }
-
-      output.push(comboOperand % 8)
+      output.push(getComboOperand(operand, registers) % 8)
     }
     // opcode 6 - bdv
     else if (opcode === 6) {
-      let comboOperand = operand
-      if (operand === 4) {
-        comboOperand = registers[0]
-      } else if (operand === 5) {
-        comboOperand = registers[1]
-      } else if (operand === 6) {
-        comboOperand = registers[2]
-      }
-      registers[1] = Math.floor(registers[0] / Math.pow(2, comboOperand))
+      registers[1] = Math.floor(
+        registers[0] / Math.pow(2, getComboOperand(operand, registers))
+      )
     }
     // opcode 7 - cdv
     else if (opcode === 7) {
-      let comboOperand = operand
-      if (operand === 4) {
-        comboOperand = registers[0]
-      } else if (operand === 5) {
-        comboOperand = registers[1]
-      } else if (operand === 6) {
-        comboOperand = registers[2]
-      }
-      registers[2] = Math.floor(registers[0] / Math.pow(2, comboOperand))
+      registers[2] = Math.floor(
+        registers[0] / Math.pow(2, getComboOperand(operand, registers))
+      )
     }
 
     if (!hasJumped) {
@@ -100,7 +68,21 @@ const part1 = (input) => {
     }
   }
 
-  return output.join(",")
+  return output
+}
+
+const part1 = (input) => {
+  // Parse input
+  const [registerInput, programInput] = input.trim().split("\n\n")
+  const registers = registerInput
+    .split("\n")
+    .flatMap((row) => row.match(/\d+/g).map((value) => Number(value)))
+  const instructions = programInput
+    .split(": ")[1]
+    .split(",")
+    .map((value) => Number(value))
+
+  return getProgramOutput(registers, instructions).join(",")
 }
 
 const part2 = (input) => {}
