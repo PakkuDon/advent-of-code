@@ -93,7 +93,89 @@ const part1 = (input, width, bytesFallen) => {
   return costs[`${end.x},${end.y}`]
 }
 
-const part2 = (input) => {}
+const part2 = (input, width) => {
+  // Parse input
+  const start = { x: 0, y: 0 }
+  const end = { x: width, y: width }
+  const grid = []
+  for (let y = 0; y < width + 1; y++) {
+    grid.push(Array(width + 1).fill("."))
+  }
+  const bytes = input
+    .trim()
+    .split("\n")
+    .map((row) => {
+      const coords = row.split(",")
+      return {
+        x: Number(coords[0]),
+        y: Number(coords[1]),
+      }
+    })
+
+  // Determine which byte will block path to exit
+  let index = 0
+  for (index = 0; index < bytes.length; index++) {
+    // Place byte in maze
+    const byte = bytes[index]
+    grid[byte.y][byte.x] = "#"
+
+    // Determine if maze can be solved if byte is placed
+    let isSolvable = false
+    const stack = []
+    const visited = {}
+    stack.push({ ...start })
+
+    while (stack.length > 0) {
+      const current = stack.shift()
+
+      // Skip visited nodes
+      if (visited[`${current.x},${current.y}`]) {
+        continue
+      }
+      visited[`${current.x},${current.y}`] = 1
+
+      // Break if exit reached
+      if (current.x === end.x && current.y === end.y) {
+        isSolvable = true
+        break
+      }
+
+      // Add potential neighbours to stack to explore
+      // Up
+      if (current.y > 0 && grid[current.y - 1][current.x] !== "#") {
+        stack.push({
+          x: current.x,
+          y: current.y - 1,
+        })
+      }
+      // Right
+      if (current.x < width && grid[current.y][current.x + 1] !== "#") {
+        stack.push({
+          x: current.x + 1,
+          y: current.y,
+        })
+      }
+      // Down
+      if (current.y < width && grid[current.y + 1][current.x] !== "#") {
+        stack.push({
+          x: current.x,
+          y: current.y + 1,
+        })
+      }
+      // Left
+      if (current.x > 0 && grid[current.y][current.x - 1] !== "#") {
+        stack.push({
+          x: current.x - 1,
+          y: current.y,
+        })
+      }
+    }
+
+    if (!isSolvable) {
+      return `${byte.x},${byte.y}`
+    }
+  }
+}
 
 module.exports = {
   part1,
