@@ -16,9 +16,18 @@ bbrgwb`
   })
 })
 
-xdescribe("part2", () => {
-  test("returns something", () => {
-    const input = `puzzle input`
-    expect(part2(input)).toEqual(0)
+describe("part2", () => {
+  test("returns number of possible ways patterns can be made", () => {
+    const input = `r, wr, b, g, bwu, rb, gb, br
+
+brwrr
+bggr
+gbbr
+rrbgbr
+ubwu
+bwurrg
+brgr
+bbrgwb`
+    expect(part2(input)).toEqual(16)
   })
 })
