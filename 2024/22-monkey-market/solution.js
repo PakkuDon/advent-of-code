@@ -1,3 +1,10 @@
+const generateNextSecretNumber = (number) => {
+  let secretNumber = (number ^ (number * 64n)) % 16777216n
+  secretNumber = ((secretNumber / 32n) ^ secretNumber) % 16777216n
+  secretNumber = ((secretNumber * 2048n) ^ secretNumber) % 16777216n
+  return secretNumber
+}
+
 const part1 = (input) => {
   // Parse input
   const numbers = input
@@ -6,13 +13,9 @@ const part1 = (input) => {
     .map((value) => BigInt(value))
 
   // Calculate secret numbers after 2000 iterations
-  for (let i = 0; i < 2000; i++) {
-    for (let j = 0; j < numbers.length; j++) {
-      let number = numbers[j]
-      number = (number ^ (number * 64n)) % 16777216n
-      number = ((number / 32n) ^ number) % 16777216n
-      number = ((number * 2048n) ^ number) % 16777216n
-      numbers[j] = number
+  for (let i = 0; i < numbers.length; i++) {
+    for (let j = 0; j < 2000; j++) {
+      numbers[i] = generateNextSecretNumber(numbers[i])
     }
   }
 
@@ -38,11 +41,8 @@ const part2 = (input) => {
 
     // Calculate changes in 1s position for buyer after 2000 iterations
     for (let j = 0; j < 2000; j++) {
-      number = (number ^ (number * 64n)) % 16777216n
-      number = ((number / 32n) ^ number) % 16777216n
-      number = ((number * 2048n) ^ number) % 16777216n
-      numbers[i] = number
-      const digit = Number(number) % 10
+      numbers[i] = generateNextSecretNumber(numbers[i])
+      const digit = Number(numbers[i]) % 10
       if (digits.length > 0) {
         changes.push(digit - digits[digits.length - 1])
       }
