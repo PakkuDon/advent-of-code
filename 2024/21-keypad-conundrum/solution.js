@@ -138,38 +138,29 @@ const part1 = (input) => {
   // Generate instructions for numeric keypad
   const complexities = codes.map((code) => {
     // Generate instructions to enter code into numeric keypad
-    let paths = []
+    let path = ""
     let current = "A"
-    let newPath = ""
     code.split("").forEach((char) => {
-      newPath += getPathToNode(numericKeypad, current, char) + "A"
+      path += getPathToNode(numericKeypad, current, char) + "A"
       current = char
     })
-    paths.push(newPath)
 
-    // Generate instructions for second robot
-    let path = paths[0]
-    current = "A"
-    newPath = ""
-    path.split("").forEach((char) => {
-      newPath += getPathToNode(controller, current, char) + "A"
-      current = char
-    })
-    paths.push(newPath)
+    // Generate instructions for next two robots
+    for (let i = 0; i < 2; i++) {
+      let newPath = ""
+      current = "A"
 
-    // Generate instructions for third robot
-    path = paths[1]
-    current = "A"
-    newPath = ""
-    path.split("").forEach((char) => {
-      newPath += getPathToNode(controller, current, char) + "A"
-      current = char
-    })
-    paths.push(newPath)
+      path.split("").forEach((char) => {
+        newPath += getPathToNode(controller, current, char) + "A"
+        current = char
+      })
+
+      path = newPath
+    }
 
     // Calculate path complexity
     const number = Number(code.replace(/^0/, "").replace(/[^\d]/g, ""))
-    return number * paths[paths.length - 1].length
+    return number * path.length
   })
 
   // Return sum of code complexities
