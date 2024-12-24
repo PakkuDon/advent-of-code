@@ -1,4 +1,4 @@
-const part1 = (input) => {
+const parseInput = (input) => {
   // Parse input
   const [wireInput, gatesInput] = input.trim().split("\n\n")
   const wires = {}
@@ -26,15 +26,23 @@ const part1 = (input) => {
     }
   })
 
-  // Process all z wires to construct binary number
-  const zWires = Object.keys(wires)
-    .filter((key) => key.startsWith("z"))
+  return wires
+}
+
+const calculateNumbersOnWires = (wires, prefix) => {
+  const matchingWires = Object.keys(wires)
+    .filter((key) => key.startsWith(prefix))
     .sort()
     .reverse()
-  let numbers = zWires.map((key) => wires[key]())
+  let numbers = matchingWires.map((key) => wires[key]())
 
   // Return decimal number
   return parseInt(numbers.join(""), 2)
+}
+
+const part1 = (input) => {
+  const wires = parseInput(input)
+  return calculateNumbersOnWires(wires, "z")
 }
 
 const part2 = (input) => {}
