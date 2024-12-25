@@ -33,7 +33,8 @@ const getProgramOutput = (registers, instructions) => {
     }
     // opcode 2 - bst
     else if (opcode === 2) {
-      registers[1] = getComboOperand(operand, registers) % 8
+      // Use & 7 rather than module 8 as modulo triggers an overflow resulting in different results
+      registers[1] = getComboOperand(operand, registers) & 7
     }
     // opcode 3 - jnz
     else if (opcode === 3) {
@@ -48,7 +49,8 @@ const getProgramOutput = (registers, instructions) => {
     }
     // opcode 5 - out
     else if (opcode === 5) {
-      output.push(getComboOperand(operand, registers) % 8)
+      // Use & 7 rather than module 8 as modulo triggers an overflow resulting in different results
+      output.push(getComboOperand(operand, registers) & 7)
     }
     // opcode 6 - bdv
     else if (opcode === 6) {
@@ -85,7 +87,33 @@ const part1 = (input) => {
   return getProgramOutput(registers, instructions).join(",")
 }
 
-const part2 = (input) => {}
+const part2 = (input) => {
+  // Parse input
+  const programInput = input.trim().split("\n\n")[1]
+  const instructionText = programInput.split(": ")[1]
+  const instructions = instructionText.split(",").map((value) => Number(value))
+
+  let a = 0
+
+  // Find a value that causes program to output itself
+  for (let i = instructions.length - 1; i >= 0; i--) {
+    // Increase value by 8 as operations are based around mod 8s
+    a *= 8
+    // Look for a value that generates right-most subset of instructions,
+    // then multiply a by 8 to find next-most significant digit
+    const subset = instructions.slice(i).join(",")
+    while (true) {
+      const output = getProgramOutput([a, 0, 0], instructions)
+
+      if (output.join(",") === subset) {
+        break
+      }
+      a++
+    }
+  }
+
+  return a
+}
 
 module.exports = {
   part1,

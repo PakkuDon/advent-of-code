@@ -20,9 +20,13 @@ Program: 0,1,5,4,3,0`
   })
 })
 
-xdescribe("part2", () => {
-  test("returns something", () => {
-    const input = `puzzle input`
-    expect(part2(input)).toEqual(0)
+describe("part2", () => {
+  test("returns lowest possible A value to reproduce program", () => {
+    const input = `Register A: 2024
+Register B: 0
+Register C: 0
+
+Program: 0,3,5,4,3,0`
+    expect(part2(input)).toEqual(117440)
   })
 })
