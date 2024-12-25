@@ -203,7 +203,62 @@ const part1 = (input) => {
   return complexities.reduce((total, current) => total + current, 0)
 }
 
-const part2 = (input) => {}
+const part2 = (input) => {
+  // Parse input
+  const codes = input.trim().split("\n")
+
+  // Generate instructions for numeric keypad
+  // Store instructions as count of sequences to reach button, then reach A from last button
+  const complexities = codes.map((code) => {
+    let current = "A"
+    let tally = {}
+
+    code.split("").forEach((char) => {
+      const pathToNode = shortestPathToNode[`${current},${char}`]
+
+      if (!tally[pathToNode]) {
+        tally[pathToNode] = 0
+      }
+      tally[pathToNode]++
+
+      current = char
+    })
+
+    // Generate sequence to enter into other 25 directional robots
+    for (let i = 0; i < 25; i++) {
+      const newTally = {}
+
+      for (let key in tally) {
+        // Find required sequences for each keypress in previous tally
+        const count = tally[key]
+        let current = "A"
+        key.split("").forEach((char) => {
+          const pathToNode = shortestPathToNode[`${current},${char}`]
+
+          if (!newTally[pathToNode]) {
+            newTally[pathToNode] = 0
+          }
+          newTally[pathToNode] += count
+          current = char
+        })
+      }
+
+      tally = newTally
+    }
+
+    // Calculate path complexity
+    const number = Number(code.replace(/^0/, "").replace(/[^\d]/g, ""))
+    const pathLength = Object.keys(tally).reduce(
+      (total, key) => total + key.length * tally[key],
+      0
+    )
+
+    return number * pathLength
+  })
+
+  // Return sum of code complexities
+  return complexities.reduce((total, current) => total + current, 0)
+}
 
 module.exports = {
   part1,
