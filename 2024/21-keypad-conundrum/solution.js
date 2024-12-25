@@ -99,7 +99,7 @@ const getPathToNode = (grid, start, end) => {
       )
     })
   )
-  const minPaths = paths.filter((path) => {
+  const shortestPaths = paths.filter((path) => {
     if (path.length === minLength) {
       const turnCount = [...path].reduce(
         (count, char, index) => (char !== path[index - 1] ? count + 1 : count),
@@ -112,11 +112,13 @@ const getPathToNode = (grid, start, end) => {
   })
   // Hack: Handle ties between paths with alphabetical sort
   // This seems to prioritise downward / leftward movements which yields lower cost paths
-  minPaths.sort((a, b) => b.localeCompare(a))
+  shortestPaths.sort((a, b) => b.localeCompare(a))
 
+  // Append "A" to represent button press
+  const shortestPath = shortestPaths[0] + "A"
   // Cache for future lookup
-  cachedPaths[`${start},${end}`] = minPaths[0]
-  return minPaths[0]
+  cachedPaths[`${start},${end}`] = shortestPath
+  return shortestPath
 }
 
 const part1 = (input) => {
@@ -136,31 +138,52 @@ const part1 = (input) => {
   ]
 
   // Generate instructions for numeric keypad
+  // Store instructions as count of sequences to reach button, then reach A from last button
   const complexities = codes.map((code) => {
-    // Generate instructions to enter code into numeric keypad
-    let path = ""
     let current = "A"
+    let tally = {}
+
     code.split("").forEach((char) => {
-      path += getPathToNode(numericKeypad, current, char) + "A"
+      const pathToNode = getPathToNode(numericKeypad, current, char)
+
+      if (!tally[pathToNode]) {
+        tally[pathToNode] = 0
+      }
+      tally[pathToNode]++
+
       current = char
     })
 
-    // Generate instructions for next two robots
+    // Generate sequence to enter into other 2 directional robots
     for (let i = 0; i < 2; i++) {
-      let newPath = ""
-      current = "A"
+      const newTally = {}
 
-      path.split("").forEach((char) => {
-        newPath += getPathToNode(controller, current, char) + "A"
-        current = char
-      })
+      for (let key in tally) {
+        // Find required sequences for each keypress in previous tally
+        const count = tally[key]
+        let current = "A"
+        key.split("").forEach((char) => {
+          const pathToNode = getPathToNode(controller, current, char)
 
-      path = newPath
+          if (!newTally[pathToNode]) {
+            newTally[pathToNode] = 0
+          }
+          newTally[pathToNode] += count
+          current = char
+        })
+      }
+
+      tally = newTally
     }
 
     // Calculate path complexity
     const number = Number(code.replace(/^0/, "").replace(/[^\d]/g, ""))
-    return number * path.length
+    const pathLength = Object.keys(tally).reduce(
+      (total, key) => total + key.length * tally[key],
+      0
+    )
+
+    return number * pathLength
   })
 
   // Return sum of code complexities
