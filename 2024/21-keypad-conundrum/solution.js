@@ -1,141 +1,154 @@
-const cachedPaths = {}
-
-// Find paths from start to end node
-const getPathToNode = (grid, start, end) => {
-  if (cachedPaths[`${start},${end}`]) {
-    return cachedPaths[`${start},${end}`]
-  }
-  // Find start location
-  const origin = {}
-  for (let y = 0; y < grid.length; y++) {
-    for (let x = 0; x < grid[y].length; x++) {
-      if (grid[y][x] === start) {
-        origin.x = x
-        origin.y = y
-        origin.value = start
-        break
-      }
-    }
-  }
-
-  const paths = []
-  const queue = []
-  queue.push({ path: "", node: { ...origin } })
-
-  while (queue.length > 0) {
-    const { path, node: current } = queue.shift()
-
-    // Skip if current path is not shortest path
-    if (paths.length > 0) {
-      const minLength = Math.min(...paths.map((path) => path.length))
-
-      if (path.length > minLength) {
-        continue
-      }
-    }
-
-    // If target node found, save path
-    if (current.value === end) {
-      paths.push(path)
-    }
-
-    // Add potential neighbours to stack to explore
-    // Up
-    if (current.y > 0 && grid[current.y - 1][current.x]) {
-      queue.push({
-        node: {
-          x: current.x,
-          y: current.y - 1,
-          value: grid[current.y - 1][current.x],
-        },
-        path: path + "^",
-      })
-    }
-    // Right
-    if (grid[current.y][current.x + 1]) {
-      queue.push({
-        node: {
-          x: current.x + 1,
-          y: current.y,
-          value: grid[current.y][current.x + 1],
-        },
-        path: path + ">",
-      })
-    }
-    // Down
-    if (current.y < grid.length - 1 && grid[current.y + 1][current.x]) {
-      queue.push({
-        node: {
-          x: current.x,
-          y: current.y + 1,
-          value: grid[current.y + 1][current.x],
-        },
-        path: path + "v",
-      })
-    }
-    // Left
-    if (grid[current.y][current.x - 1]) {
-      queue.push({
-        node: {
-          x: current.x - 1,
-          y: current.y,
-          value: grid[current.y][current.x - 1],
-        },
-        path: path + "<",
-      })
-    }
-  }
-
-  // Find lowest cost path. This is determined by:
-  // - Path length
-  // - How many turns are in path
-  // - Locale sort (not sure why. Seems to favour horizontal movements?)
-  const minLength = Math.min(...paths.map((path) => path.length))
-  const minTurns = Math.min(
-    ...paths.map((path) => {
-      return [...path].reduce(
-        (count, char, index) => (char !== path[index - 1] ? count + 1 : count),
-        0
-      )
-    })
-  )
-  const shortestPaths = paths.filter((path) => {
-    if (path.length === minLength) {
-      const turnCount = [...path].reduce(
-        (count, char, index) => (char !== path[index - 1] ? count + 1 : count),
-        0
-      )
-
-      return turnCount === minTurns
-    }
-    return false
-  })
-  // Hack: Handle ties between paths with alphabetical sort
-  // This seems to prioritise downward / leftward movements which yields lower cost paths
-  shortestPaths.sort((a, b) => b.localeCompare(a))
-
-  // Append "A" to represent button press
-  const shortestPath = shortestPaths[0] + "A"
-  // Cache for future lookup
-  cachedPaths[`${start},${end}`] = shortestPath
-  return shortestPath
+const shortestPathToNode = {
+  "0,0": "A",
+  "0,1": "^<A",
+  "0,2": "^A",
+  "0,3": "^>A",
+  "0,4": "^^<A",
+  "0,5": "^^A",
+  "0,6": "^^>A",
+  "0,7": "^^^<A",
+  "0,8": "^^^A",
+  "0,9": "^^^>A",
+  "0,A": ">A",
+  "1,0": ">vA",
+  "1,1": "A",
+  "1,2": ">A",
+  "1,3": ">>A",
+  "1,4": "^A",
+  "1,5": "^>A",
+  "1,6": "^>>A",
+  "1,7": "^^A",
+  "1,8": "^^>A",
+  "1,9": "^^>>A",
+  "1,A": ">>vA",
+  "2,0": "vA",
+  "2,1": "<A",
+  "2,2": "A",
+  "2,3": ">A",
+  "2,4": "<^A",
+  "2,5": "^A",
+  "2,6": "^>A",
+  "2,7": "<^^A",
+  "2,8": "^^A",
+  "2,9": "^^>A",
+  "2,A": "v>A",
+  "3,0": "<vA",
+  "3,1": "<<A",
+  "3,2": "<A",
+  "3,3": "A",
+  "3,4": "<<^A",
+  "3,5": "<^A",
+  "3,6": "^A",
+  "3,7": "<<^^A",
+  "3,8": "<^^A",
+  "3,9": "^^A",
+  "3,A": "vA",
+  "4,0": ">vvA",
+  "4,1": "vA",
+  "4,2": "v>A",
+  "4,3": "v>>A",
+  "4,4": "A",
+  "4,5": ">A",
+  "4,6": ">>A",
+  "4,7": "^A",
+  "4,8": "^>A",
+  "4,A": ">>vvA",
+  "5,0": "vvA",
+  "5,1": "<vA",
+  "5,2": "vA",
+  "5,3": "v>A",
+  "5,4": "<A",
+  "5,5": "A",
+  "5,6": ">A",
+  "5,7": "<^A",
+  "5,8": "^A",
+  "5,9": "^>A",
+  "5,A": "vv>A",
+  "6,0": "<vvA",
+  "6,1": "<<vA",
+  "6,2": "<vA",
+  "6,3": "vA",
+  "6,4": "<<A",
+  "6,5": "<A",
+  "6,6": "A",
+  "6,7": "<<^A",
+  "6,8": "<^A",
+  "6,9": "^A",
+  "6,A": "vvA",
+  "7,0": ">vvvA",
+  "7,1": "vvA",
+  "7,2": "vv>A",
+  "7,3": "vv>>A",
+  "7,4": "vA",
+  "7,5": "v>A",
+  "7,6": "v>>A",
+  "7,7": "A",
+  "7,8": ">A",
+  "7,9": ">>A",
+  "7,A": ">>vvvA",
+  "8,0": "vvvA",
+  "8,1": "<vvA",
+  "8,2": "vvA",
+  "8,3": "vv>A",
+  "8,4": "<vA",
+  "8,5": "vA",
+  "8,6": "v>A",
+  "8,7": "<A",
+  "8,8": "A",
+  "8,9": ">A",
+  "8,A": "vvv>A",
+  "9,0": "<vvvA",
+  "9,1": "<<vvA",
+  "9,2": "<vvA",
+  "9,3": "vvA",
+  "9,4": "<<vA",
+  "9,5": "<vA",
+  "9,6": "vA",
+  "9,7": "<<A",
+  "9,8": "<A",
+  "9,9": "A",
+  "9,A": "vvvA",
+  "A,0": "<A",
+  "A,1": "^<<A",
+  "A,2": "<^A",
+  "A,3": "^A",
+  "A,4": "^^<<A",
+  "A,5": "<^^A",
+  "A,6": "^^A",
+  "A,7": "^^^<<A",
+  "A,8": "<^^^A",
+  "A,9": "^^^A",
+  "A,A": "A",
+  "^,A": ">A",
+  "^,<": "v<A",
+  "^,v": "vA",
+  "^,>": "v>A",
+  "^,^": "A",
+  "A,^": "<A",
+  "A,<": "v<<A",
+  "A,v": "<vA",
+  "A,>": "vA",
+  "A,A": "A",
+  "<,^": ">^A",
+  "<,A": ">>^A",
+  "<,v": ">A",
+  "<,>": ">>A",
+  "<,<": "A",
+  "v,^": "^A",
+  "v,A": "^>A",
+  "v,<": "<A",
+  "v,>": ">A",
+  "v,v": "A",
+  ">,^": "<^A",
+  ">,A": "^A",
+  ">,<": "<<A",
+  ">,v": "<A",
+  ">,>": "A",
 }
 
 const part1 = (input) => {
   // Parse input
   const codes = input.trim().split("\n")
-
-  // Keypads
-  const numericKeypad = [
-    ["7", "8", "9"],
-    ["4", "5", "6"],
-    ["1", "2", "3"],
-    [undefined, "0", "A"],
-  ]
-  const controller = [
-    [undefined, "^", "A"],
-    ["<", "v", ">"],
-  ]
 
   // Generate instructions for numeric keypad
   // Store instructions as count of sequences to reach button, then reach A from last button
@@ -144,7 +157,7 @@ const part1 = (input) => {
     let tally = {}
 
     code.split("").forEach((char) => {
-      const pathToNode = getPathToNode(numericKeypad, current, char)
+      const pathToNode = shortestPathToNode[`${current},${char}`]
 
       if (!tally[pathToNode]) {
         tally[pathToNode] = 0
@@ -163,7 +176,7 @@ const part1 = (input) => {
         const count = tally[key]
         let current = "A"
         key.split("").forEach((char) => {
-          const pathToNode = getPathToNode(controller, current, char)
+          const pathToNode = shortestPathToNode[`${current},${char}`]
 
           if (!newTally[pathToNode]) {
             newTally[pathToNode] = 0
