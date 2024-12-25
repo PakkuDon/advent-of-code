@@ -45,7 +45,12 @@ const part1 = (input) => {
   return calculateNumbersOnWires(wires, "z")
 }
 
-const part2 = (input) => {}
+const part2 = (input) => {
+  console.log(
+    "Note: This was solved manually by putting plotting gates in GraphViz and looking for entanglements. Exiting"
+  )
+  return
+}
 
 module.exports = {
   part1,
