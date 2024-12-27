@@ -14,7 +14,6 @@ const part1 = (input) => {
 
     const coordinates = []
     let current = { ...origin }
-    coordinates.push(`${current.x},${current.y}`)
 
     instructions.forEach((instruction) => {
       let shift
@@ -42,9 +41,7 @@ const part1 = (input) => {
     return coordinates
   })
 
-  const intersections = wires[0].filter((coordinate) => {
-    return coordinate !== "0,0" && wires[1].includes(coordinate)
-  })
+  const intersections = [...new Set(wires[0]).intersection(new Set(wires[1]))]
 
   return Math.min(
     ...intersections.map((coordinate) =>
