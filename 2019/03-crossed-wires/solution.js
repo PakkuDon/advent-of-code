@@ -50,7 +50,59 @@ const part1 = (input) => {
   )
 }
 
-const part2 = (values) => {}
+const part2 = (input) => {
+  const origin = { x: 0, y: 0 }
+  const wires = input.map((wireInput) => {
+    const instructions = wireInput.split(",").map((segment) => ({
+      direction: segment[0],
+      units: parseInt(segment.substring(1), 10),
+    }))
+
+    const coordinates = []
+    let current = { ...origin }
+
+    instructions.forEach((instruction) => {
+      let shift
+      switch (instruction.direction) {
+        case "R":
+          shift = (position) => ({ ...position, x: position.x + 1 })
+          break
+        case "D":
+          shift = (position) => ({ ...position, y: position.y + 1 })
+          break
+        case "L":
+          shift = (position) => ({ ...position, x: position.x - 1 })
+          break
+        case "U":
+          shift = (position) => ({ ...position, y: position.y - 1 })
+          break
+      }
+
+      for (let i = 0; i < instruction.units; i++) {
+        current = shift(current)
+        coordinates.push(`${current.x},${current.y}`)
+      }
+    })
+
+    return coordinates
+  })
+
+  const intersections = [...new Set(wires[0]).intersection(new Set(wires[1]))]
+
+  // Find fewest combined steps to reach intersection
+  let fewestCombinedSteps = Number.MAX_SAFE_INTEGER
+  intersections.forEach((intersection) => {
+    // Add 1 to include step from origin
+    const stepsForFirst = wires[0].indexOf(intersection) + 1
+    const stepsForSecond = wires[1].indexOf(intersection) + 1
+
+    if (stepsForFirst + stepsForSecond < fewestCombinedSteps) {
+      fewestCombinedSteps = stepsForFirst + stepsForSecond
+    }
+  })
+
+  return fewestCombinedSteps
+}
 
 module.exports = {
   part1,
