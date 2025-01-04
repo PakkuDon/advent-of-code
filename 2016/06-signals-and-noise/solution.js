@@ -1,16 +1,19 @@
+const getTallyForColumn = (rows, column) => {
+  const tally = {}
+  for (let i = 0; i < rows.length; i++) {
+    const char = rows[i][column]
+    tally[char] = (tally[char] || 0) + 1
+  }
+  return tally
+}
+
 const part1 = (input) => {
   const rows = input.trim().split("\n")
 
   // Find most-frequent character in each column
   const chars = []
   for (let i = 0; i < rows[0].length; i++) {
-    const tally = {}
-
-    for (let j = 0; j < rows.length; j++) {
-      const char = rows[j][i]
-      tally[char] = (tally[char] || 0) + 1
-    }
-
+    const tally = getTallyForColumn(rows, i)
     const frequentChar = Object.keys(tally).filter(
       (key) => tally[key] === Math.max(...Object.values(tally))
     )
@@ -24,23 +27,17 @@ const part1 = (input) => {
 const part2 = (input) => {
   const rows = input.trim().split("\n")
 
-  // Find most-frequent character in each column
+  // Find least-frequent character in each column
   const chars = []
   for (let i = 0; i < rows[0].length; i++) {
-    const tally = {}
-
-    for (let j = 0; j < rows.length; j++) {
-      const char = rows[j][i]
-      tally[char] = (tally[char] || 0) + 1
-    }
-
-    const frequentChar = Object.keys(tally).filter(
+    const tally = getTallyForColumn(rows, i)
+    const lessFrequentChar = Object.keys(tally).filter(
       (key) => tally[key] === Math.min(...Object.values(tally))
     )
-    chars.push(frequentChar)
+    chars.push(lessFrequentChar)
   }
 
-  // Return message formed by most-frequent chars
+  // Return message formed by least-frequent chars
   return chars.join("")
 }
 
