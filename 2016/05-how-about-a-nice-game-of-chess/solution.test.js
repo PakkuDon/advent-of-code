@@ -7,9 +7,9 @@ describe("part1", () => {
   })
 })
 
-xdescribe("part2", () => {
-  test("returns something", () => {
-    const input = `puzzle input`
-    expect(part2(input)).toEqual(0)
+describe("part2", () => {
+  test("returns password for given Door ID using updated algorithm", () => {
+    const input = `abc`
+    expect(part2(input)).toEqual("05ace8e3")
   })
 })
