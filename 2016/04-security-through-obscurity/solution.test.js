@@ -10,9 +10,9 @@ totally-real-room-200[decoy]`
   })
 })
 
-xdescribe("part2", () => {
-  test("returns something", () => {
-    const input = `puzzle input`
-    expect(part2(input)).toEqual(0)
+describe("part2", () => {
+  test("returns decrypted names with corresponding sector IDs", () => {
+    const input = `qzmt-zixmtkozy-ivhz-343`
+    expect(part2(input)).toEqual("very encrypted name 343")
   })
 })
