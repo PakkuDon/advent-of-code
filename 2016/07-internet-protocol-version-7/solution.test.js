@@ -10,9 +10,12 @@ ioxxoj[asdfgh]zxcvbn`
   })
 })
 
-xdescribe("part2", () => {
-  test("returns something", () => {
-    const input = `puzzle input`
-    expect(part2(input)).toEqual(0)
+describe("part2", () => {
+  test("returns number of IPs that support SSL", () => {
+    const input = `aba[bab]xyz
+xyx[xyx]xyx
+aaa[kek]eke
+zazbz[bzb]cdb`
+    expect(part2(input)).toEqual(3)
   })
 })
