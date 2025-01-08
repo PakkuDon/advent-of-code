@@ -59,7 +59,20 @@ const part1 = (input) => {
   return password
 }
 
-const part2 = (input) => {}
+const part2 = (input) => {
+  // Get answer from part 1
+  let password = part1(input)
+
+  // Increment password as part 1 password has expired
+  password = incrementPassword(password)
+
+  // Generate passwords by incrementing password until next valid password
+  while (!isValidPassword(password)) {
+    password = incrementPassword(password)
+  }
+
+  return password
+}
 
 module.exports = {
   part1,
