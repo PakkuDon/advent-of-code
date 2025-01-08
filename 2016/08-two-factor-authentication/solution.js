@@ -62,7 +62,16 @@ const part1 = (input) => {
   return count
 }
 
-const part2 = (input) => {}
+const part2 = (input) => {
+  const instructions = input.trim().split("\n")
+  const screen = Array(6)
+    .fill()
+    .map(() => Array(50).fill("."))
+
+  processInstructions(instructions, screen)
+
+  console.log(screen.map((row) => row.join("")).join("\n"))
+}
 
 module.exports = {
   part1,
