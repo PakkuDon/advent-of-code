@@ -80,7 +80,21 @@ const part1 = (input) => {
   return findOptimalHappiness(guests)
 }
 
-const part2 = (input) => {}
+const part2 = (input) => {
+  const guests = parseInput(input)
+
+  // Add ourselves to guest list
+  // Guests' happiness is not affected by us, and ours is not impacted by seating arrangement
+  guests["You"] = {}
+  Object.keys(guests)
+    .filter((key) => key !== "You")
+    .forEach((guest) => {
+      guests["You"][guest] = 0
+      guests[guest]["You"] = 0
+    })
+
+  return findOptimalHappiness(guests)
+}
 
 module.exports = {
   part1,
