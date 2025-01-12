@@ -24,7 +24,27 @@ const part1 = (input, sum) => {
   ).length
 }
 
-const part2 = (input) => {}
+const part2 = (input, sum) => {
+  const containers = input
+    .trim()
+    .split("\n")
+    .map((value) => Number(value))
+
+  const subsets = generateSubsets(containers)
+
+  // Find potential combinations that add to provided sum
+  const potentialCombinations = subsets.filter(
+    (subset) => subset.reduce((total, current) => total + current, 0) === sum
+  )
+
+  // Count number of combinations that use least containers required
+  const leastContainersRequired = Math.min(
+    ...potentialCombinations.map((combination) => combination.length)
+  )
+  return potentialCombinations.filter(
+    (combination) => combination.length === leastContainersRequired
+  ).length
+}
 
 module.exports = {
   part1,

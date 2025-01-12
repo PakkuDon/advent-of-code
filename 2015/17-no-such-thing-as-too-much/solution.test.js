@@ -11,9 +11,13 @@ describe("part1", () => {
   })
 })
 
-xdescribe("part2", () => {
-  test("returns something", () => {
-    const input = `puzzle input`
-    expect(part2(input)).toEqual(0)
+describe("part2", () => {
+  test("returns number of combinations with least required containers that add to given sum", () => {
+    const input = `20
+15
+10
+5
+5`
+    expect(part2(input, 25)).toEqual(3)
   })
 })
