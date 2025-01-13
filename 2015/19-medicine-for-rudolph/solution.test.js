@@ -20,9 +20,26 @@ HOHOHO`
   })
 })
 
-xdescribe("part2", () => {
-  test("returns something", () => {
-    const input = `puzzle input`
-    expect(part2(input)).toEqual(0)
+describe("part2", () => {
+  xtest("smaller example - returns least number of steps to reduce to e - Skipped due to non-deterministic behaviour", () => {
+    const input = `e => H
+e => O
+H => HO
+H => OH
+O => HH
+
+HOH`
+    expect(part2(input)).toEqual(3)
+  })
+
+  xtest("larger example - returns least number of steps to reduce to e - Skipped due to non-deterministic behaviour", () => {
+    const input = `e => H
+e => O
+H => HO
+H => OH
+O => HH
+
+HOHOHO`
+    expect(part2(input)).toEqual(6)
   })
 })
