@@ -73,7 +73,36 @@ const part1 = (input, steps) => {
   )
 }
 
-const part2 = (input) => {}
+const part2 = (input, steps) => {
+  // Parse input
+  let grid = input
+    .trim()
+    .split("\n")
+    .map((row) => row.split(""))
+
+  // Turn on corner cells
+  grid[0][0] = "#"
+  grid[0][grid[0].length - 1] = "#"
+  grid[grid.length - 1][0] = "#"
+  grid[grid.length - 1][grid[0].length - 1] = "#"
+
+  // Calculate next state for given number of steps
+  for (let i = 0; i < steps; i++) {
+    grid = getNextState(grid)
+
+    // Turn on corner cells
+    grid[0][0] = "#"
+    grid[0][grid[0].length - 1] = "#"
+    grid[grid.length - 1][0] = "#"
+    grid[grid.length - 1][grid[0].length - 1] = "#"
+  }
+
+  // Count how many lights are on
+  return grid.reduce(
+    (total, row) => total + row.filter((cell) => cell === "#").length,
+    0
+  )
+}
 
 module.exports = {
   part1,
