@@ -213,7 +213,30 @@ const part1 = (input) => {
   return leastCost
 }
 
-const part2 = (input) => {}
+const part2 = (input) => {
+  // Initialise characters
+  const player = {
+    hp: 100,
+    damage: 0,
+    armor: 0,
+  }
+  const boss = initialiseBoss(input)
+
+  // Simulate battle with different equips to find most amount of gold we can spend and still lose
+  let maxCost = Number.MIN_SAFE_INTEGER
+  const equipmentSets = getPotentialEquipmentSets()
+  equipmentSets.forEach((equips) => {
+    player.damage = equips.reduce((total, item) => total + item.damage, 0)
+    player.armor = equips.reduce((total, item) => total + item.armor, 0)
+    const cost = equips.reduce((total, item) => total + item.cost, 0)
+
+    if (!canPlayerWin(player, boss) && cost > maxCost) {
+      maxCost = cost
+    }
+  })
+
+  return maxCost
+}
 
 module.exports = {
   part1,
