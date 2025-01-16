@@ -58,7 +58,18 @@ const part1 = (input, requestedRegister) => {
   return registers[requestedRegister]
 }
 
-const part2 = (input) => {}
+const part2 = (input, requestedRegister) => {
+  const registers = {
+    a: 1,
+    b: 0,
+  }
+  const instructions = input.trim().split("\n")
+
+  processInstructions(instructions, registers)
+
+  // Return value from specified register
+  return registers[requestedRegister]
+}
 
 module.exports = {
   part1,
