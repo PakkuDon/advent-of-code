@@ -16,9 +16,18 @@ describe("part1", () => {
   })
 })
 
-xdescribe("part2", () => {
-  test("returns something", () => {
-    const input = `puzzle input`
-    expect(part2(input)).toEqual(0)
+describe("part2", () => {
+  test("returns quantum entanglement of first group in ideal configuration given 4 compartments", () => {
+    const input = `1
+2
+3
+4
+5
+7
+8
+9
+10
+11`
+    expect(part2(input)).toEqual(44)
   })
 })

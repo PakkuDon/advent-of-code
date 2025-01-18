@@ -46,7 +46,37 @@ const part1 = (input) => {
   )
 }
 
-const part2 = (input) => {}
+const part2 = (input) => {
+  // Parse input
+  const packages = input
+    .trim()
+    .split("\n")
+    .map((value) => Number(value))
+  // Divide by 4 to account for extra compartment
+  const targetWeight = packages.reduce((total, weight) => total + weight, 0) / 4
+
+  // Find potential configurations where each package group has same weight
+  const groups = generateSubsets(packages)
+  const possibleGroups = groups.filter(
+    (group) =>
+      group.reduce((total, weight) => total + weight, 0) === targetWeight
+  )
+
+  // Find group that uses least required packages
+  const minRequiredPackages = Math.min(
+    ...possibleGroups.map((group) => group.length)
+  )
+
+  // Return smallest quantum entanglement from groups with fewest packages
+  const matchingGroups = possibleGroups.filter(
+    (group) => group.length === minRequiredPackages
+  )
+  return Math.min(
+    ...matchingGroups.map((group) =>
+      group.reduce((total, current) => total * current, 1)
+    )
+  )
+}
 
 module.exports = {
   part1,
