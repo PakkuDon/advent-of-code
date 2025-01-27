@@ -190,7 +190,30 @@ const part1 = (input, player = { hp: 50, mana: 500, armor: 0 }) => {
   return getLeastManaRequiredToWin({ player, boss, spellbook, effects: [] })
 }
 
-const part2 = (input) => {}
+const part2 = (input, player = { hp: 50, mana: 500, armor: 0 }) => {
+  // Initialise players
+  const boss = initialiseBoss(input)
+  const hardMode = {
+    name: "Hard Mode",
+    mana: 0,
+    damage: 0,
+    armor: 0,
+    heal: 0,
+    start: (player, boss) => {},
+    act: (player, boss) => {
+      player.hp -= 1
+    },
+    end: (player, boss) => {},
+    duration: 100,
+  }
+
+  return getLeastManaRequiredToWin({
+    player,
+    boss,
+    spellbook,
+    effects: [hardMode],
+  })
+}
 
 module.exports = {
   part1,
