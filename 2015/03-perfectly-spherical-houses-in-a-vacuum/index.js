@@ -1,14 +1,10 @@
 const fs = require("fs")
 const path = require("path")
-const getNumberOfHousesVisited = require("./01")
-const getNumberOfHousesVisitedWithRobotSanta = require("./02")
+const { part1, part2 } = require("./solution")
 
-const puzzleInput = fs.readFileSync(path.join(__dirname, "input.txt"), "utf8")
-const directions = puzzleInput.trim().split("")
+const puzzleInput = fs
+  .readFileSync(path.join(__dirname, "input.txt"), "utf8")
+  .trim()
 
-const numberOfHousesVisited = getNumberOfHousesVisited(directions)
-const numberOfHousesVisitedWithRobotSanta =
-  getNumberOfHousesVisitedWithRobotSanta(directions)
-
-console.log(`Part 1: ${numberOfHousesVisited}`)
-console.log(`Part 2: ${numberOfHousesVisitedWithRobotSanta}`)
+console.log(`Part 1: ${part1(puzzleInput)}`)
+console.log(`Part 2: ${part2(puzzleInput)}`)

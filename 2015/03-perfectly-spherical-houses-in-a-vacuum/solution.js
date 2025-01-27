@@ -23,9 +23,38 @@ const getHousesVisited = (directions) => {
   return path
 }
 
-const getNumberOfHousesVisitedWithRobotSanta = (directions) => {
+const part1 = (input) => {
+  let x = 0
+  let y = 0
+  const path = []
+  const directions = input.split("")
+
+  path.push({ x, y })
+
+  for (let direction of directions) {
+    const shift = shiftByDirection[direction]
+    x += shift.x
+    y += shift.y
+
+    path.push({ x, y })
+  }
+
+  const uniqueHouses = path
+    .map((coordinate) => `${coordinate.x},${coordinate.y}`)
+    .reduce((uniqueCoordinates, coordinate) => {
+      if (!uniqueCoordinates.includes(coordinate)) {
+        uniqueCoordinates.push(coordinate)
+      }
+      return uniqueCoordinates
+    }, [])
+
+  return uniqueHouses.length
+}
+
+const part2 = (input) => {
   const santaDirections = []
   const robotDirections = []
+  const directions = input.split("")
 
   for (let i = 0; i < directions.length; i++) {
     const direction = directions[i]
@@ -52,4 +81,7 @@ const getNumberOfHousesVisitedWithRobotSanta = (directions) => {
   return uniqueHouses.length
 }
 
-module.exports = getNumberOfHousesVisitedWithRobotSanta
+module.exports = {
+  part1,
+  part2,
+}
