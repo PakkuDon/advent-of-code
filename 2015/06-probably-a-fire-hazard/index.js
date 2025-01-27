@@ -1,13 +1,10 @@
 const fs = require("fs")
 const path = require("path")
-const getNumberOfLightsSwitchedOn = require("./01")
-const getTotalBrightness = require("./02")
+const { part1, part2 } = require("./solution")
 
-const puzzleInput = fs.readFileSync(path.join(__dirname, "input.txt"), "utf8")
-const instructions = puzzleInput.trim().split("\n")
+const puzzleInput = fs
+  .readFileSync(path.join(__dirname, "input.txt"), "utf8")
+  .trim()
 
-const numberOfLightsSwitchedOn = getNumberOfLightsSwitchedOn(instructions)
-const totalBrightness = getTotalBrightness(instructions)
-
-console.log(`Part 1: ${numberOfLightsSwitchedOn}`)
-console.log(`Part 2: ${totalBrightness}`)
+console.log(`Part 1: ${part1(puzzleInput)}`)
+console.log(`Part 2: ${part2(puzzleInput)}`)

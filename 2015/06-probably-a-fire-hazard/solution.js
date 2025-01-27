@@ -20,6 +20,55 @@ const processInstructions = (grid, instructions) => {
 
     switch (type) {
       case "toggle":
+        action = (isLit) => !isLit
+        break
+      case "turn on":
+        action = () => true
+        break
+      case "turn off":
+        action = () => false
+        break
+      default:
+        throw new Error(`Invalid action type. Received ${type}`)
+    }
+
+    for (let x = x1; x <= x2; x++) {
+      for (let y = y1; y <= y2; y++) {
+        grid[x][y] = action(grid[x][y])
+      }
+    }
+  })
+}
+
+const part1 = (input) => {
+  let numberOfLightsOn = 0
+  const grid = new Array(GRID_LENGTH)
+  for (let i = 0; i < grid.length; i++) {
+    grid[i] = new Array(GRID_LENGTH)
+    grid[i].fill(false)
+  }
+
+  const instructions = input.trim().split("\n")
+  processInstructions(grid, instructions)
+
+  for (let x = 0; x < grid.length; x++) {
+    for (let y = 0; y < grid[x].length; y++) {
+      if (grid[x][y]) {
+        numberOfLightsOn++
+      }
+    }
+  }
+
+  return numberOfLightsOn
+}
+
+const calculateBrightness = (grid, instructions) => {
+  instructions.forEach((instruction) => {
+    const { type, x1, y1, x2, y2 } = parseInstruction(instruction)
+    let action
+
+    switch (type) {
+      case "toggle":
         action = (brightness) => brightness + 2
         break
       case "turn on":
@@ -45,7 +94,7 @@ const processInstructions = (grid, instructions) => {
   })
 }
 
-const getTotalBrightness = (instructions) => {
+const part2 = (input) => {
   let totalBrightness = 0
   const grid = new Array(GRID_LENGTH)
   for (let i = 0; i < grid.length; i++) {
@@ -53,7 +102,8 @@ const getTotalBrightness = (instructions) => {
     grid[i].fill(0)
   }
 
-  processInstructions(grid, instructions)
+  const instructions = input.trim().split("\n")
+  calculateBrightness(grid, instructions)
 
   for (let x = 0; x < grid.length; x++) {
     for (let y = 0; y < grid[x].length; y++) {
@@ -64,4 +114,7 @@ const getTotalBrightness = (instructions) => {
   return totalBrightness
 }
 
-module.exports = getTotalBrightness
+module.exports = {
+  part1,
+  part2,
+}
