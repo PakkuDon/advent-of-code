@@ -49,9 +49,23 @@ describe("part1", () => {
   })
 })
 
-xdescribe("part2", () => {
-  test("returns something", () => {
-    const input = `puzzle input`
-    expect(part2(input)).toEqual(0)
+describe("part2", () => {
+  const testCases = [
+    {
+      input: ")",
+      expected: 1,
+    },
+    {
+      input: "()())",
+      expected: 5,
+    },
+  ]
+
+  testCases.forEach(({ input, expected }, index) => {
+    test(`example ${
+      index + 1
+    } - returns position of instruction that leads to basement`, () => {
+      expect(part2(input)).toEqual(expected)
+    })
   })
 })
