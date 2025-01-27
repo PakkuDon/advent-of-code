@@ -18,4 +18,15 @@ const findLowestNumberForKey = (secretKey, hashPrefix) => {
   return number
 }
 
-module.exports = findLowestNumberForKey
+const part1 = (input) => {
+  return findLowestNumberForKey(input, "00000")
+}
+
+const part2 = (input) => {
+  return findLowestNumberForKey(input, "000000")
+}
+
+module.exports = {
+  part1,
+  part2,
+}

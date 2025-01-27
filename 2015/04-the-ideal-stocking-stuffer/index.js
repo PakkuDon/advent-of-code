@@ -1,5 +1,10 @@
-const findLowestNumberForKey = require("./01")
-const puzzleInput = "ckczppom"
+const fs = require("fs")
+const path = require("path")
+const { part1, part2 } = require("./solution")
 
-console.log(`Part 1: ${findLowestNumberForKey(puzzleInput, "00000")}`)
-console.log(`Part 1: ${findLowestNumberForKey(puzzleInput, "000000")}`)
+const puzzleInput = fs
+  .readFileSync(path.join(__dirname, "input.txt"), "utf8")
+  .trim()
+
+console.log(`Part 1: ${part1(puzzleInput)}`)
+console.log(`Part 2: ${part2(puzzleInput)}`)
