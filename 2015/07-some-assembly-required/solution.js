@@ -1,18 +1,6 @@
 const MAX_VALUE = 65535
 
-const resolve = (signals, key) => {
-  if (!isNaN(key)) {
-    return key
-  } else if (isNaN(signals[key])) {
-    signals[key] = signals[key]()
-    return signals[key]
-  }
-  return signals[key]
-}
-
-const calculateSignal = (instructions, target, initialSignals = {}) => {
-  let signals = Object.assign({}, initialSignals)
-
+const processInstructions = (instructions, signals) => {
   for (let instruction of instructions) {
     const [_, input, key] = instruction.match(/([\w\s]+)\ -> (\w+)/)
 
@@ -45,8 +33,37 @@ const calculateSignal = (instructions, target, initialSignals = {}) => {
       }
     }
   }
+}
+
+const resolve = (signals, key) => {
+  if (!isNaN(key)) {
+    return key
+  } else if (isNaN(signals[key])) {
+    signals[key] = signals[key]()
+    return signals[key]
+  }
+  return signals[key]
+}
+
+const part1 = (input, target, initialSignals = {}) => {
+  const signals = Object.assign({}, initialSignals)
+  const instructions = input.trim().split("\n")
+
+  processInstructions(instructions, signals)
 
   return resolve(signals, target)
 }
 
-module.exports = calculateSignal
+const part2 = (input, target, initialSignals = {}) => {
+  const signals = Object.assign({}, initialSignals)
+  const instructions = input.trim().split("\n")
+
+  processInstructions(instructions, signals)
+
+  return part1(input, target, { b: resolve(signals, target) })
+}
+
+module.exports = {
+  part1,
+  part2,
+}

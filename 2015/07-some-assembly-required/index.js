@@ -1,14 +1,10 @@
 const fs = require("fs")
 const path = require("path")
-const calculateSignal = require("./01")
+const { part1, part2 } = require("./solution")
 
-const puzzleInput = fs.readFileSync(path.join(__dirname, "input.txt"), "utf8")
-const instructions = puzzleInput.trim().split("\n")
+const puzzleInput = fs
+  .readFileSync(path.join(__dirname, "input.txt"), "utf8")
+  .trim()
 
-const signal = calculateSignal(instructions, "a")
-const signalWithDifferentDefault = calculateSignal(instructions, "a", {
-  b: signal,
-})
-
-console.log(`Part 1: ${signal}`)
-console.log(`Part 2: ${signalWithDifferentDefault}`)
+console.log(`Part 1: ${part1(puzzleInput, "a")}`)
+console.log(`Part 2: ${part2(puzzleInput, "a")}`)
