@@ -1,13 +1,4 @@
-const part1 = (input) => {
-  const registers = {
-    a: 0,
-    b: 0,
-    c: 0,
-    d: 0,
-  }
-
-  // Process instructions
-  const instructions = input.trim().split("\n")
+const processInstructions = (instructions, registers) => {
   let i = 0
 
   while (i < instructions.length) {
@@ -57,11 +48,35 @@ const part1 = (input) => {
       i++
     }
   }
+}
+
+const part1 = (input) => {
+  const instructions = input.trim().split("\n")
+  const registers = {
+    a: 0,
+    b: 0,
+    c: 0,
+    d: 0,
+  }
+
+  processInstructions(instructions, registers)
 
   return registers.a
 }
 
-const part2 = (input) => {}
+const part2 = (input) => {
+  const instructions = input.trim().split("\n")
+  const registers = {
+    a: 0,
+    b: 0,
+    c: 1,
+    d: 0,
+  }
+
+  processInstructions(instructions, registers)
+
+  return registers.a
+}
 
 module.exports = {
   part1,
