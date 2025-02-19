@@ -17,7 +17,36 @@ const part1 = (input) => {
   }
 }
 
-const part2 = (input) => {}
+const MAX_VALUE = 4294967295
+const part2 = (input) => {
+  // Parse ranges
+  const ranges = input
+    .trim()
+    .split("\n")
+    .map((row) => row.split("-").map((value) => Number(value)))
+
+  // Get boundary values
+  // Lowest range starts at 0 so we only need to check ends of ranges
+  const values = ranges.map((range) => range[1] + 1)
+
+  // Count number of values that don't fall into given ranges
+  // Start from boundary value, then count numbers until we reach next range
+  let count = 0
+  for (let value of values) {
+    let i = value
+
+    while (i < MAX_VALUE) {
+      if (!ranges.some(([low, high]) => i >= low && i <= high)) {
+        count++
+        i++
+      } else {
+        break
+      }
+    }
+  }
+
+  return count
+}
 
 module.exports = {
   part1,
