@@ -35,7 +35,7 @@ const processInstructions = (robots, outputs, loopUntil) => {
   const queue = []
   queue.push(robots.filter((robot) => robot.values.length === 2)[0])
 
-  while (queue.length > 0 && !loopUntil(robots)) {
+  while (queue.length > 0 && !loopUntil(robots, outputs)) {
     const robot = queue.shift()
     // Move to next node if robot no longer has two values to measure
     if (robot.values.length !== 2) {
@@ -84,7 +84,18 @@ const part1 = (input, a, b) => {
   return robot.number
 }
 
-const part2 = (input) => {}
+const part2 = (input) => {
+  const robots = parseInput(input)
+  const outputs = []
+
+  processInstructions(
+    robots,
+    outputs,
+    (robots, outputs) => outputs[0] && outputs[1] && outputs[2]
+  )
+
+  return outputs[0] * outputs[1] * outputs[2]
+}
 
 module.exports = {
   part1,
