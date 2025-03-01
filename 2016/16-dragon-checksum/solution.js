@@ -24,7 +24,9 @@ const part1 = (input, targetLength) => {
   return checksum
 }
 
-const part2 = (input) => {}
+const part2 = (input, targetLength) => {
+  return part1(input, targetLength)
+}
 
 module.exports = {
   part1,
