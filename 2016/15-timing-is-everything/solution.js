@@ -31,7 +31,11 @@ const part1 = (input) => {
   return getTimeToRetrieveCapsule(discs)
 }
 
-const part2 = (input) => {}
+const part2 = (input) => {
+  const discs = parseInput(input)
+  discs.push({ numberOfPositions: 11, initialPosition: 0 })
+  return getTimeToRetrieveCapsule(discs)
+}
 
 module.exports = {
   part1,
