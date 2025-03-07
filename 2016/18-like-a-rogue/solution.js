@@ -43,7 +43,9 @@ const part1 = (input, targetRows) => {
   return rows.reduce((total, row) => total + (row.match(/\./g) || []).length, 0)
 }
 
-const part2 = (input) => {}
+const part2 = (input, targetRows) => {
+  return part1(input, targetRows)
+}
 
 module.exports = {
   part1,
