@@ -18,29 +18,29 @@ const isTrap = (left, center, right) => {
 const part1 = (input, targetRows) => {
   // Initialise state
   let row = input.trim()
-  const rows = [input.trim()]
+  let safeTileCount = (row.match(/\./g) || []).length
 
   // Generate rows until targetRows reached
-  while (rows.length < targetRows) {
-    const previousRow = rows[rows.length - 1]
+  for (let i = 0; i < targetRows; i++) {
     let nextRow = ""
 
-    for (let x = 0; x < previousRow.length; x++) {
+    for (let x = 0; x < row.length; x++) {
       // Get tiles for trap check
-      const left = previousRow[x - 1] || "."
-      const center = previousRow[x]
-      const right = previousRow[x + 1] || "."
+      const left = row[x - 1] || "."
+      const center = row[x]
+      const right = row[x + 1] || "."
 
       if (isTrap(left, center, right)) {
         nextRow += "^"
       } else {
         nextRow += "."
+        safeTileCount++
       }
     }
-    rows.push(nextRow)
+    row = nextRow
   }
 
-  return rows.reduce((total, row) => total + (row.match(/\./g) || []).length, 0)
+  return safeTileCount
 }
 
 const part2 = (input, targetRows) => {
