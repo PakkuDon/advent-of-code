@@ -67,7 +67,38 @@ const part1 = (input, password) => {
   return chars.join("")
 }
 
-const part2 = (input) => {}
+// From https://rosettacode.org/wiki/Permutations#JavaScript
+const generatePermutations = (list) => {
+  if (list.length < 2) {
+    return [list]
+  }
+  const permutations = []
+  for (let i = 0; i < list.length; i++) {
+    const element = list.splice(i, 1)[0]
+    const subsequence = generatePermutations(list)
+
+    for (let j = 0; j < subsequence.length; j++) {
+      permutations.push([element, ...subsequence[j]])
+    }
+    list.splice(i, 0, element)
+  }
+
+  return permutations
+}
+
+const part2 = (input, password) => {
+  const permutations = generatePermutations(password.split(""))
+
+  // Return current permutation if it scrambles to given password
+  for (let i = 0; i < permutations.length; i++) {
+    const phrase = permutations[i].join("")
+    if (part1(input, phrase) === password) {
+      return phrase
+    }
+  }
+
+  return "No result found"
+}
 
 module.exports = {
   part1,
