@@ -21,7 +21,7 @@ const part1 = (input, targetRows) => {
   let safeTileCount = (row.match(/\./g) || []).length
 
   // Generate rows until targetRows reached
-  for (let i = 0; i < targetRows; i++) {
+  for (let i = 1; i < targetRows; i++) {
     let nextRow = ""
 
     for (let x = 0; x < row.length; x++) {
@@ -39,7 +39,6 @@ const part1 = (input, targetRows) => {
     }
     row = nextRow
   }
-
   return safeTileCount
 }
 
