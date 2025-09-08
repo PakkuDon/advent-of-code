@@ -25,7 +25,17 @@ const part1 = (input) => {
   return elves[0].number
 }
 
-const part2 = (input) => {}
+const part2 = (input) => {
+  const numberOfElves = Number(input.trim())
+
+  // https://www.reddit.com/r/adventofcode/comments/5j4lp1/comment/dbdf50n/
+  let i = 1
+  while (i * 3 < numberOfElves) {
+    i *= 3
+  }
+
+  return numberOfElves - i
+}
 
 module.exports = {
   part1,

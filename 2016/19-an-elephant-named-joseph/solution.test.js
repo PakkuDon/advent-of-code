@@ -7,9 +7,9 @@ describe("part1", () => {
   })
 })
 
-xdescribe("part2", () => {
-  test("returns something", () => {
-    const input = `puzzle input`
-    expect(part2(input)).toEqual(0)
+describe("part2", () => {
+  test("returns which elf gets all the presents in new algorithm", () => {
+    const input = `5`
+    expect(part2(input)).toEqual(2)
   })
 })
