@@ -14,6 +14,7 @@ Solutions for [Advent of Code](https://adventofcode.com)
 - [2022](2022)
 - [2023](2023)
 - [2024](2024)
+- [2025](2025)
 
 ## Development instructions
 
