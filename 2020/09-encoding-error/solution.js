@@ -38,7 +38,30 @@ const part1 = (input, preambleLength = 25) => {
   }
 }
 
-const part2 = (input) => {}
+const part2 = (input, preambleLength = 25) => {
+  const invalidNumber = part1(input, preambleLength)
+  const numbers = input.split("\n").map((value) => Number(value))
+
+  // Find first contiguous set that equals invalid number
+  for (let i = 0; i < numbers.length; i++) {
+    // From first number, scan every subset until end
+    for (let windowSize = 1; windowSize + i < numbers.length; windowSize++) {
+      const sequence = numbers.slice(i, windowSize)
+      const sum = sequence.reduce((total, current) => total + current, 0)
+
+      // If sequence matches invalid number return sum of min and max numbers of set
+      if (sum === invalidNumber) {
+        const min = Math.min(...sequence)
+        const max = Math.max(...sequence)
+        return min + max
+      }
+      // Break early if future sets cannot equal invalid number
+      if (sum > invalidNumber) {
+        break
+      }
+    }
+  }
+}
 
 module.exports = {
   part1,

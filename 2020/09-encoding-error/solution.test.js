@@ -26,9 +26,28 @@ describe("part1", () => {
   })
 })
 
-xdescribe("part2", () => {
-  test("returns something", () => {
-    const input = `puzzle input`
-    expect(part2(input)).toEqual(0)
+describe("part2", () => {
+  test("returns sum of min and max contiguous sequence that sums up to invalid number", () => {
+    const input = `35
+20
+15
+25
+47
+40
+62
+55
+65
+95
+102
+117
+150
+182
+127
+219
+299
+277
+309
+576`
+    expect(part2(input, 5)).toEqual(62)
   })
 })
