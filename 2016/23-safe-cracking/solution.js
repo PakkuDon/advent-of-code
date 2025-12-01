@@ -120,7 +120,20 @@ const part1 = (input, initialState = {}) => {
   return registers.a
 }
 
-const part2 = (input) => {}
+const part2 = (input, initialState = {}) => {
+  const instructions = input.trim().split("\n")
+  const registers = {
+    a: 0,
+    b: 0,
+    c: 0,
+    d: 0,
+    ...initialState,
+  }
+
+  processInstructions(instructions, registers)
+
+  return registers.a
+}
 
 module.exports = {
   part1,

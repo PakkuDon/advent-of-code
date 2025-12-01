@@ -7,4 +7,5 @@ const puzzleInput = fs
   .trim()
 
 console.log(`Part 1: ${part1(puzzleInput, { a: 7 })}`)
-console.log(`Part 2: ${part2(puzzleInput)}`)
+console.log("Note: Part 2 currently takes over 5 minutes to complete")
+console.log(`Part 2: ${part2(puzzleInput, { a: 12 })}`)
