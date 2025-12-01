@@ -29,7 +29,43 @@ const part1 = (input) => {
   return count
 }
 
-const part2 = (input) => {}
+const part2 = (input) => {
+  let current = 50
+  let count = 0
+  const instructions = input
+    .trim()
+    .split("\n")
+    .map((value) => ({
+      direction: value[0],
+      units: Number(value.substring(1)),
+    }))
+
+  instructions.forEach(({ direction, units }) => {
+    if (direction === "L") {
+      for (let i = 0; i < units; i++) {
+        current--
+        if (current < 0) {
+          current = 99
+        }
+        if (current === 0) {
+          count++
+        }
+      }
+    } else {
+      for (let i = 0; i < units; i++) {
+        current++
+        if (current > 99) {
+          current = 0
+        }
+        if (current === 0) {
+          count++
+        }
+      }
+    }
+  })
+
+  return count
+}
 
 module.exports = {
   part1,

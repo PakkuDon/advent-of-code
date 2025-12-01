@@ -16,9 +16,18 @@ L82`
   })
 })
 
-xdescribe("part2", () => {
-  test("returns something", () => {
-    const input = `puzzle input`
-    expect(part2(input)).toEqual(0)
+describe("part2", () => {
+  test("counts number of times dial points to 0 during rotations", () => {
+    const input = `L68
+L30
+R48
+L5
+R60
+L55
+L1
+L99
+R14
+L82`
+    expect(part2(input)).toEqual(6)
   })
 })
