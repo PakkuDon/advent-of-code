@@ -10,9 +10,12 @@ describe("part1", () => {
   })
 })
 
-xdescribe("part2", () => {
-  test("returns something", () => {
-    const input = `puzzle input`
-    expect(part2(input)).toEqual(0)
+describe("part2", () => {
+  test("returns total of largest joltage output with 12 batteries", () => {
+    const input = `987654321111111
+811111111111119
+234234234234278
+818181911112111`
+    expect(part2(input)).toEqual(3121910778619)
   })
 })
