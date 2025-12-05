@@ -17,9 +17,19 @@ describe("part1", () => {
   })
 })
 
-xdescribe("part2", () => {
-  test("returns something", () => {
-    const input = `puzzle input`
-    expect(part2(input)).toEqual(0)
+describe("part2", () => {
+  test("returns number of ingredient IDs within ranges", () => {
+    const input = `3-5
+10-14
+16-20
+12-18
+
+1
+5
+8
+11
+17
+32`
+    expect(part2(input)).toEqual(14)
   })
 })
