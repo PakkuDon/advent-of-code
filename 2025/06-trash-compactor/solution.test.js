@@ -10,9 +10,12 @@ describe("part1", () => {
   })
 })
 
-xdescribe("part2", () => {
-  test("returns something", () => {
-    const input = `puzzle input`
-    expect(part2(input)).toEqual(0)
+describe("part2", () => {
+  test("returns sum of worksheet using new formula", () => {
+    const input = `123 328  51 64 
+ 45 64  387 23 
+  6 98  215 314
+*   +   *   +  `
+    expect(part2(input)).toEqual(3263827)
   })
 })
